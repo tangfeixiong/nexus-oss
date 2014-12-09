@@ -12,33 +12,18 @@
  */
 package org.sonatype.nexus.repository.view;
 
-import java.util.Map;
-
-import javax.annotation.Nullable;
-
-import org.sonatype.nexus.repository.Repository;
-
-import com.google.common.collect.Multimap;
+import java.io.InputStream;
 
 /**
  * ???
  *
  * @since 3.0
  */
-public interface Request
+public interface Payload
 {
-  Repository getRepository();
+  String getMimeType();
 
-  String getAction();
+  long getSize();
 
-  String getPath();
-
-  Map<String,String> getParameters();
-
-  Multimap<String,String> getHeaders();
-
-  Map<String, Object> getAttributes();
-
-  @Nullable
-  Payload getPayload();
+  InputStream getInputStream();
 }
