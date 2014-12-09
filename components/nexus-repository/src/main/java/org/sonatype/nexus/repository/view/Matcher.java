@@ -19,4 +19,5 @@ package org.sonatype.nexus.repository.view;
  */
 public interface Matcher
 {
+  boolean matches(Context context);
 }

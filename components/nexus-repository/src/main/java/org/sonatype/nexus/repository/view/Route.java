@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.repository.view;
 
+import java.util.List;
+
 /**
  * ???
  *
@@ -19,4 +21,7 @@ package org.sonatype.nexus.repository.view;
  */
 public interface Route
 {
+  Matcher getMatcher();
+
+  List<Handler> getHandlers();
 }

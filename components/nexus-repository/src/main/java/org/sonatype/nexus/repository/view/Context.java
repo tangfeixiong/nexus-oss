@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.repository.view;
 
+import javax.annotation.Nullable;
+
 /**
  * ???
  *
@@ -19,4 +21,21 @@ package org.sonatype.nexus.repository.view;
  */
 public interface Context
 {
+  Request getRequest();
+
+  @Nullable
+  Object get(String key);
+
+  @Nullable
+  <T> T get(Class<T> type);
+
+  void set(String key, Object value);
+
+  <T> void set(Class<T> type, T value);
+
+  void remove(String key);
+
+  void remove(Class type);
+
+  Response proceed() throws Exception;
 }

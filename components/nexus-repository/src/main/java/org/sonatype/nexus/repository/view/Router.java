@@ -19,4 +19,5 @@ package org.sonatype.nexus.repository.view;
  */
 public interface Router
 {
+  Response dispatch(Request request) throws Exception;
 }

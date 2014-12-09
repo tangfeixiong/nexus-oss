@@ -12,15 +12,16 @@
  */
 package org.sonatype.nexus.repository.view;
 
-import org.sonatype.nexus.repository.Facet;
-
 /**
  * ???
  *
  * @since 3.0
  */
-public interface ViewFacet
-  extends Facet
+public class AlwaysMatch
+  implements Matcher
 {
-  Router getRouter();
+  @Override
+  public boolean matches(final Context context) {
+    return true;
+  }
 }

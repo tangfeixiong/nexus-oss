@@ -19,4 +19,5 @@ package org.sonatype.nexus.repository.view;
  */
 public interface Handler
 {
+  Response handle(Context context) throws Exception;
 }
