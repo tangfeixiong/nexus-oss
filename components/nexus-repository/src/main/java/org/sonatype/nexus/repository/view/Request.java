@@ -12,6 +12,15 @@
  */
 package org.sonatype.nexus.repository.view;
 
+import java.io.InputStream;
+import java.util.Map;
+
+import javax.annotation.Nullable;
+
+import org.sonatype.nexus.repository.Repository;
+
+import com.google.common.collect.Multimap;
+
 /**
  * ???
  *
@@ -19,4 +28,18 @@ package org.sonatype.nexus.repository.view;
  */
 public interface Request
 {
+  Repository getRepository();
+
+  String getAction();
+
+  String getPath();
+
+  Map<String,String> getParameters();
+
+  Multimap<String,String> getHeaders();
+
+  Map<String, Object> getAttributes();
+
+  @Nullable
+  InputStream getPayload();
 }

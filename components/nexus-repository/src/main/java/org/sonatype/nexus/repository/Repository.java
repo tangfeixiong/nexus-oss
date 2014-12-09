@@ -22,11 +22,14 @@ public interface Repository
   Identifier getIdentifier();
 
   Type getType();
+
   Format getFormat();
+
   String getName();
 
   Configuration getConfiguration();
 
   void attach(Facet facet);
+
   <T extends Facet> T facet(Class<T> type) throws MissingFacetException;
 }

@@ -20,6 +20,7 @@ package org.sonatype.nexus.repository;
 public interface Recipe
 {
   Type getType();
+
   Format getFormat();
 
   Repository create(Configuration config);
