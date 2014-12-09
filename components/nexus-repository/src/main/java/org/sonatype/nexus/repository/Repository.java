@@ -27,6 +27,14 @@ public interface Repository
 
   String getName();
 
+  void init(Configuration configuration) throws Exception;
+
+  void start() throws Exception;
+
+  void stop() throws Exception;
+
+  void dispose() throws Exception;
+
   Configuration getConfiguration();
 
   void attach(Facet facet) throws Exception;
