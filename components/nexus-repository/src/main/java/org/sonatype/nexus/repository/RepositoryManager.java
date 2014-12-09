@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.repository;
 
+import javax.annotation.Nullable;
+
 /**
  * ???
  *
@@ -19,4 +21,18 @@ package org.sonatype.nexus.repository;
  */
 public interface RepositoryManager
 {
+  void start() throws Exception;
+
+  void stop() throws Exception;
+
+  Iterable<Repository> browse();
+
+  @Nullable
+  Repository read(Identifier identifier);
+
+  Repository create(Configuration configuration) throws Exception;
+
+  Repository edit(Identifier identifier, Configuration configuration) throws Exception;
+
+  void delete(Identifier identifier) throws Exception;
 }
