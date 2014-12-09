@@ -18,8 +18,6 @@ import javax.annotation.Nullable;
 
 import org.sonatype.nexus.repository.Repository;
 
-import com.google.common.collect.Multimap;
-
 /**
  * ???
  *
@@ -33,9 +31,9 @@ public interface Request
 
   String getPath();
 
-  Map<String,String> getParameters();
+  Parameters getParameters();
 
-  Multimap<String,String> getHeaders();
+  Headers getHeaders();
 
   Map<String, Object> getAttributes();
 
