@@ -51,6 +51,7 @@
     <module>nexus-orient</module>
     <module>nexus-oss-edition</module>
     <module>nexus-plugin-api</module>
+    <module>nexus-repository</module>
     <module>nexus-repository-metadata-api</module>
     <module>nexus-repository-metadata-model</module>
     <module>nexus-security</module>
