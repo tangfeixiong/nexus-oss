@@ -29,7 +29,7 @@ public interface Repository
 
   Configuration getConfiguration();
 
-  void attach(Facet facet);
+  void attach(Facet facet) throws Exception;
 
   <T extends Facet> T facet(Class<T> type) throws MissingFacetException;
 }

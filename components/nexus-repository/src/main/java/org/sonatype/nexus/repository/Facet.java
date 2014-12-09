@@ -19,4 +19,11 @@ package org.sonatype.nexus.repository;
  */
 public interface Facet
 {
+  void init(Repository repository) throws Exception;
+
+  void start() throws Exception;
+
+  void stop() throws Exception;
+
+  void dispose() throws Exception;
 }

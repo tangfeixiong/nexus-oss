@@ -23,5 +23,5 @@ public interface Recipe
 
   Format getFormat();
 
-  Repository create(Configuration config);
+  Repository create(Configuration config) throws Exception;
 }
