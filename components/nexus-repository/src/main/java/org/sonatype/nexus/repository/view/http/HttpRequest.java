@@ -12,14 +12,69 @@
  */
 package org.sonatype.nexus.repository.view.http;
 
+import java.io.InputStream;
+import java.util.Map;
+
+import javax.annotation.Nullable;
+import javax.servlet.http.HttpServletRequest;
+
+import org.sonatype.nexus.repository.Repository;
 import org.sonatype.nexus.repository.view.Request;
+
+import com.google.common.collect.Multimap;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * ???
  *
  * @since 3.0
  */
-public interface HttpRequest
-  extends Request
+public class HttpRequest
+  implements Request
 {
+  private final Repository repository;
+
+  private final HttpServletRequest httpServletRequest;
+
+  public HttpRequest(final Repository repository, final HttpServletRequest httpServletRequest) {
+    this.repository = checkNotNull(repository);
+    this.httpServletRequest = checkNotNull(httpServletRequest);
+  }
+
+  @Override
+  public Repository getRepository() {
+    return repository;
+  }
+
+  @Override
+  public String getAction() {
+    return null;
+  }
+
+  @Override
+  public String getPath() {
+    return null;
+  }
+
+  @Override
+  public Map<String, String> getParameters() {
+    return null;
+  }
+
+  @Override
+  public Multimap<String, String> getHeaders() {
+    return null;
+  }
+
+  @Override
+  public Map<String, Object> getAttributes() {
+    return null;
+  }
+
+  @Nullable
+  @Override
+  public InputStream getPayload() {
+    return null;
+  }
 }
