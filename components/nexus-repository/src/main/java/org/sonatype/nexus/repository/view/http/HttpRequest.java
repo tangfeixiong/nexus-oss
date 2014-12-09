@@ -12,16 +12,16 @@
  */
 package org.sonatype.nexus.repository.view.http;
 
-import java.io.InputStream;
 import java.util.Map;
 
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 
 import org.sonatype.nexus.repository.Repository;
+import org.sonatype.nexus.repository.view.Headers;
+import org.sonatype.nexus.repository.view.Parameters;
+import org.sonatype.nexus.repository.view.Payload;
 import org.sonatype.nexus.repository.view.Request;
-
-import com.google.common.collect.Multimap;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -58,23 +58,23 @@ public class HttpRequest
   }
 
   @Override
-  public Map<String, String> getParameters() {
-    return null;
-  }
-
-  @Override
-  public Multimap<String, String> getHeaders() {
-    return null;
-  }
-
-  @Override
   public Map<String, Object> getAttributes() {
+    return null;
+  }
+
+  @Override
+  public Parameters getParameters() {
+    return null;
+  }
+
+  @Override
+  public Headers getHeaders() {
     return null;
   }
 
   @Nullable
   @Override
-  public InputStream getPayload() {
+  public Payload getPayload() {
     return null;
   }
 }
