@@ -12,26 +12,16 @@
  */
 package org.sonatype.nexus.repository.view;
 
-import java.io.InputStream;
-import java.util.Map;
-
-import javax.annotation.Nullable;
-
-import com.google.common.collect.Multimap;
-
 /**
  * ???
  *
  * @since 3.0
  */
-public interface Response
+public interface Status
 {
-  Status getStatus();
+  boolean isSuccessful();
 
-  Multimap<String,String> getHeaders();
+  int getCode();
 
-  Map<String, Object> getAttributes();
-
-  @Nullable
-  InputStream getPayload();
+  String getMessage();
 }
