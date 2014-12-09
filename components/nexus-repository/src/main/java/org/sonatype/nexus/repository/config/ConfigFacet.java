@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.repository.config;
 
+import org.sonatype.nexus.repository.Configuration;
 import org.sonatype.nexus.repository.Facet;
 
 /**
@@ -22,4 +23,7 @@ import org.sonatype.nexus.repository.Facet;
 public interface ConfigFacet
   extends Facet
 {
+  Configuration get();
+
+  void update(Configuration configuration) throws Exception;
 }
