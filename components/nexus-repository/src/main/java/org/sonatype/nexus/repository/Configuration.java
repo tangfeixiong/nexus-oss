@@ -19,4 +19,9 @@ package org.sonatype.nexus.repository;
  */
 public interface Configuration
 {
+  // recipe
+
+  // identifier
+
+  // attributes
 }
