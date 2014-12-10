@@ -17,7 +17,8 @@ package org.sonatype.nexus.repository.view;
  *
  * @since 3.0
  */
-public interface EntityResponse
+public interface PayloadResponse
   extends Response
 {
+  Payload getPayload();
 }

@@ -15,8 +15,6 @@ package org.sonatype.nexus.repository.view;
 
 import java.util.Map;
 
-import javax.annotation.Nullable;
-
 /**
  * ???
  *
@@ -29,7 +27,4 @@ public interface Response
   Headers getHeaders();
 
   Map<String, Object> getAttributes();
-
-  @Nullable
-  Payload getPayload();
 }
