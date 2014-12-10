@@ -10,29 +10,14 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
-package org.sonatype.nexus.repository;
-
-import javax.annotation.Nullable;
+package org.sonatype.nexus.repository.manager;
 
 /**
  * ???
  *
  * @since 3.0
  */
-public interface RepositoryManager
+public class RepositoryRestoredEvent
 {
-  void start() throws Exception;
 
-  void stop() throws Exception;
-
-  Iterable<Repository> browse();
-
-  @Nullable
-  Repository read(Identifier identifier);
-
-  Repository create(Configuration configuration) throws Exception;
-
-  Repository edit(Identifier identifier, Configuration configuration) throws Exception;
-
-  void delete(Identifier identifier) throws Exception;
 }
