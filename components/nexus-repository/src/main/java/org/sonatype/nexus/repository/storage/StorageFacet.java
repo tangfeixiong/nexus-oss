@@ -22,4 +22,7 @@ import org.sonatype.nexus.repository.Facet;
 public interface StorageFacet
   extends Facet
 {
+  // BREAD components
+
+  // BREAD assets
 }
