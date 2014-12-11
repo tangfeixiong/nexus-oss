@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.repository;
 
+import org.sonatype.nexus.repository.config.Configuration;
+
 /**
  * ???
  *

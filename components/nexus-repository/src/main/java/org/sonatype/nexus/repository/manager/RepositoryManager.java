@@ -14,9 +14,9 @@ package org.sonatype.nexus.repository.manager;
 
 import javax.annotation.Nullable;
 
-import org.sonatype.nexus.repository.Configuration;
 import org.sonatype.nexus.repository.Identifier;
 import org.sonatype.nexus.repository.Repository;
+import org.sonatype.nexus.repository.config.Configuration;
 
 /**
  * ???

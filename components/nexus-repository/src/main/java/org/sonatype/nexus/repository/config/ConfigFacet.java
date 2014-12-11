@@ -12,7 +12,6 @@
  */
 package org.sonatype.nexus.repository.config;
 
-import org.sonatype.nexus.repository.Configuration;
 import org.sonatype.nexus.repository.Facet;
 
 /**

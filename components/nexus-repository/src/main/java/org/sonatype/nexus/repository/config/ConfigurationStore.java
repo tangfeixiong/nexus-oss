@@ -14,8 +14,6 @@ package org.sonatype.nexus.repository.config;
 
 import javax.annotation.Nullable;
 
-import org.sonatype.nexus.repository.Configuration;
-
 /**
  * ???
  *
