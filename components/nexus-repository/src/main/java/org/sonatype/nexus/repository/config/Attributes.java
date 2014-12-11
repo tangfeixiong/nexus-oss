@@ -22,10 +22,13 @@ public interface Attributes
   String getKey();
 
   boolean defined(String name);
+
   Object get(String name);
+
   <T> T get(String name, Class<T> type);
 
   void set(String name, Object value);
+
   <T> void set(String name, Class<T> type, T value);
 
   void unset(String name);
