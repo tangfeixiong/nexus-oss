@@ -17,15 +17,18 @@ package org.sonatype.nexus.repository.config;
  *
  * @since 3.0
  */
-public interface Configuration
+public interface Attributes
 {
-  String getRecipe();
+  String getKey();
 
-  String getIdentifier();
+  boolean defined(String name);
+  Object get(String name);
+  <T> T get(String name, Class<T> type);
 
-  Attributes getAttributes(String key);
+  void set(String name, Object value);
+  <T> void set(String name, Class<T> type, T value);
 
-  void setAttributes(String key, Attributes attributes);
+  void unset(String name);
 
-  void save() throws Exception;
+  Attributes child(String name);
 }
