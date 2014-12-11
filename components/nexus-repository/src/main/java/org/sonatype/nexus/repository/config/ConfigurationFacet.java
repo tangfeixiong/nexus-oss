@@ -19,7 +19,7 @@ import org.sonatype.nexus.repository.Facet;
  *
  * @since 3.0
  */
-public interface ConfigFacet
+public interface ConfigurationFacet
   extends Facet
 {
   Configuration get();
