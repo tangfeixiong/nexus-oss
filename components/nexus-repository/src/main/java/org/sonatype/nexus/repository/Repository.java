@@ -21,7 +21,7 @@ import org.sonatype.nexus.repository.config.Configuration;
  */
 public interface Repository
 {
-  Identifier getIdentifier();
+  RepositoryIdentifier getIdentifier();
 
   Type getType();
 
