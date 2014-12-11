@@ -258,6 +258,12 @@
 
       <dependency>
         <groupId>org.sonatype.nexus</groupId>
+        <artifactId>nexus-scheduling</artifactId>
+        <version>3.0.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.sonatype.nexus</groupId>
         <artifactId>nexus-formfields</artifactId>
         <version>3.0.0-SNAPSHOT</version>
       </dependency>
@@ -438,9 +444,9 @@
             <source>${maven.compiler.source}</source>
             <target>${maven.compiler.target}</target>
             <!--
-            Configure support for Groovy compilation, but leave it off by default.  Modules which need this should configure the compilerId.
+            Configure support for Groovy compilation.
             -->
-            <!--<compilerId>groovy-eclipse-compiler</compilerId>-->
+            <compilerId>groovy-eclipse-compiler</compilerId>
           </configuration>
         </plugin>
 
@@ -547,7 +553,7 @@
         <plugin>
           <groupId>org.jvnet.jaxb2.maven2</groupId>
           <artifactId>maven-jaxb2-plugin</artifactId>
-          <version>0.8.3</version>
+          <version>0.11.0</version>
           <dependencies>
             <dependency>
               <groupId>org.sonatype.sisu.jacksbee</groupId>

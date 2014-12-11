@@ -18,7 +18,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import org.sonatype.nexus.scheduling.NexusTaskScheduler;
+import org.sonatype.nexus.scheduling.TaskScheduler;
 import org.sonatype.nexus.scheduling.TaskInfo;
 import org.sonatype.nexus.scheduling.TaskInfo.State;
 import org.sonatype.plexus.rest.resource.AbstractPlexusResource;
@@ -34,6 +34,8 @@ import org.restlet.data.Response;
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.Variant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -42,13 +44,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class TasksWaitForPlexusResource
     extends AbstractPlexusResource
 {
+  private static final Logger log = LoggerFactory.getLogger(TasksWaitForPlexusResource.class);
 
   private static final String RESOURCE_URI = "/tasks/waitFor";
 
-  private final NexusTaskScheduler nexusScheduler;
+  private final TaskScheduler nexusScheduler;
 
   @Inject
-  public TasksWaitForPlexusResource(final NexusTaskScheduler nexusScheduler)
+  public TasksWaitForPlexusResource(final TaskScheduler nexusScheduler)
   {
     this.nexusScheduler = checkNotNull(nexusScheduler);
   }
@@ -106,7 +109,7 @@ public class TasksWaitForPlexusResource
     return "Tasks Not Finished";
   }
 
-  static boolean isTaskCompleted(final NexusTaskScheduler nexusScheduler,
+  static boolean isTaskCompleted(final TaskScheduler nexusScheduler,
                                  final String taskType,
                                  final TaskInfo<?> namedTask)
   {
@@ -123,7 +126,7 @@ public class TasksWaitForPlexusResource
     }
   }
 
-  static TaskInfo<?> getTaskByName(final NexusTaskScheduler nexusScheduler, final String name) {
+  static TaskInfo<?> getTaskByName(final TaskScheduler nexusScheduler, final String name) {
     if (name == null) {
       return null;
     }
@@ -148,11 +151,13 @@ public class TasksWaitForPlexusResource
   }
 
   private static boolean isTaskCompleted(TaskInfo<?> task) {
-    System.out.println(task.getName() + " " + task.getCurrentState().getState() + " " + task.getLastRunState());
+    log.debug("task: {} : {}, currentState: {}, endState: {}", task.getId(), task.getName(),
+        task.getCurrentState().getState(),
+        task.getLastRunState() != null ? task.getLastRunState().getEndState() : "n/a");
     return State.RUNNING != task.getCurrentState().getState() && task.getLastRunState() != null;
   }
 
-  private static List<TaskInfo<?>> getTasks(final NexusTaskScheduler nexusScheduler, final String taskType) {
+  private static List<TaskInfo<?>> getTasks(final TaskScheduler nexusScheduler, final String taskType) {
     final List<TaskInfo<?>> tasks = nexusScheduler.listsTasks();
     return Lists.newArrayList(Iterables.filter(tasks, new Predicate<TaskInfo<?>>()
     {
