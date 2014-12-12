@@ -29,6 +29,8 @@ import org.sonatype.nexus.repository.manager.RepositoryManager;
 import org.sonatype.nexus.repository.view.Response;
 import org.sonatype.nexus.repository.view.ViewFacet;
 
+import com.google.common.base.Throwables;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
@@ -68,7 +70,7 @@ public class ViewServlet
       response = facet.getRouter().dispatch(new HttpRequest(repo, req));
     }
     catch (Exception e) {
-      // TODO: propagate ServletException, IOException?
+      Throwables.propagateIfPossible(e, ServletException.class, IOException.class);
       throw new ServletException(e);
     }
 
