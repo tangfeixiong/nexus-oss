@@ -20,7 +20,7 @@ import org.sonatype.nexus.repository.view.Matcher;
  *
  * @since 3.0
  */
-public class AlwaysMatch
+public class AlwaysMatcher
   implements Matcher
 {
   @Override
