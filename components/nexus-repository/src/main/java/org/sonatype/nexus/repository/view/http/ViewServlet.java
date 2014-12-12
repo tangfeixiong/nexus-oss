@@ -78,9 +78,9 @@ public class ViewServlet
 
   @Nonnull
   private Repository repository(final HttpServletRequest request) {
-    String key = "TODO";
+    String key = "TODO"; // decode from request
     Repository repo = repositoryManager.read(key);
-    checkState(repo != null, "Missing repository: %s", key);
+    checkState(repo != null, "No repository with key: %s", key);
     //noinspection ConstantConditions
     return repo;
   }
@@ -89,7 +89,7 @@ public class ViewServlet
   private HttpResponseSender sender(final Repository repository) {
     String format = repository.getFormat().value();
     HttpResponseSender sender = responseSenders.get(format);
-    checkState(sender != null, "Missing HTTP response sender: %s", sender);
+    checkState(sender != null, "No HTTP response sender for format: %s", format);
     //noinspection ConstantConditions
     return sender;
   }
