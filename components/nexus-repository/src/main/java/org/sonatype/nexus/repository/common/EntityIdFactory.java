@@ -17,7 +17,7 @@ package org.sonatype.nexus.repository.common;
  *
  * @since 3.0
  */
-public interface EntityIdentifier
+public interface EntityIdFactory
 {
-  String value();
+  EntityId create();
 }

@@ -19,7 +19,7 @@ package org.sonatype.nexus.repository.common;
  */
 public interface EntityHandle
 {
-  EntityIdentifier getIdentifier();
+  EntityId getId();
 
   EntityVersion getVersion();
 }

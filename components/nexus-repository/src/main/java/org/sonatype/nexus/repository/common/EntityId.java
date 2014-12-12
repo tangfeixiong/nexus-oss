@@ -12,15 +12,12 @@
  */
 package org.sonatype.nexus.repository.common;
 
-import javax.annotation.Nullable;
-
 /**
  * ???
  *
  * @since 3.0
  */
-public interface Entity
+public interface EntityId
 {
-  @Nullable
-  EntityHandle getEntityHandle();
+  String value();
 }
