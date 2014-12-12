@@ -12,6 +12,9 @@
  */
 package org.sonatype.nexus.repository.view.http;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.sonatype.nexus.repository.view.Response;
@@ -23,5 +26,5 @@ import org.sonatype.nexus.repository.view.Response;
  */
 public interface HttpResponseSender
 {
-  void send(Response response, HttpServletResponse httpServletResponse) throws Exception;
+  void send(Response response, HttpServletResponse httpServletResponse) throws ServletException, IOException;
 }

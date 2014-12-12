@@ -15,6 +15,7 @@ package org.sonatype.nexus.repository.view.http;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -23,9 +24,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.sonatype.nexus.repository.Repository;
 import org.sonatype.nexus.repository.manager.RepositoryManager;
+import org.sonatype.nexus.repository.view.Response;
+import org.sonatype.nexus.repository.view.ViewFacet;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * ???
@@ -53,6 +58,37 @@ public class ViewServlet
   protected void service(final HttpServletRequest req, final HttpServletResponse resp)
       throws ServletException, IOException
   {
-    // TODO:
+    // resolve repository for request
+    Repository repo = repository(req);
+
+    // dispatch request
+    ViewFacet facet = repo.facet(ViewFacet.class);
+    Response response;
+    try {
+      response = facet.getRouter().dispatch(new HttpRequest(repo, req));
+    }
+    catch (Exception e) {
+      // TODO: propagate ServletException, IOException?
+      throw new ServletException(e);
+    }
+
+    // send response
+    sender(repo).send(response, resp);
+  }
+
+  @Nonnull
+  private Repository repository(final HttpServletRequest request) {
+    String key = "TODO";
+    Repository repo = repositoryManager.read(key);
+    checkState(repo != null, "Missing repository: %s", key);
+    return repo;
+  }
+
+  @Nonnull
+  private HttpResponseSender sender(final Repository repository) {
+    String format = repository.getFormat().value();
+    HttpResponseSender sender = responseSenders.get(format);
+    checkState(sender != null, "Missing HTTP response sender: %s", sender);
+    return sender;
   }
 }
