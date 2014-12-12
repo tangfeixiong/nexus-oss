@@ -15,7 +15,7 @@ package org.sonatype.nexus.repository.config;
 import javax.annotation.Nullable;
 
 /**
- * ???
+ * {@link Configuration} store.
  *
  * @since 3.0
  */

@@ -12,26 +12,97 @@
  */
 package org.sonatype.nexus.repository.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Nullable;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
+
 /**
- * ???
+ * Configuration attributes.
  *
  * @since 3.0
  */
-public interface Attributes
+public class Attributes
 {
-  String getKey();
+  private final String key;
 
-  boolean defined(String name);
+  private final Map<String,Object> map;
 
-  Object get(String name);
+  public Attributes(final String key, final Map<String, Object> map) {
+    this.key = checkNotNull(key);
+    this.map = checkNotNull(map);
+  }
 
-  <T> T get(String name, Class<T> type);
+  public String getKey() {
+    return key;
+  }
 
-  void set(String name, Object value);
+  public boolean defined(final String name) {
+    checkNotNull(name);
+    return map.containsKey(name);
+  }
 
-  <T> void set(String name, Class<T> type, T value);
+  @Nullable
+  public Object get(final String name) {
+    checkNotNull(name);
+    return map.get(name);
+  }
 
-  void unset(String name);
+  public void set(final String name, final Object value) {
+    checkNotNull(name);
+    checkNotNull(value);
+    checkState(!(value instanceof Map), "Use child() to set a map value");
+    map.put(name, value);
+  }
 
-  Attributes child(String name);
+  public void remove(final String name) {
+    checkNotNull(name);
+    map.remove(name);
+  }
+
+  public Attributes child(final String name) {
+    checkNotNull(name);
+
+    Object child = map.get(name);
+    if (child == null) {
+      child = new HashMap<String,Object>();
+      map.put(name, child);
+    }
+    else {
+      checkState(child instanceof Map, "child '%s' not a Map", name);
+    }
+    //noinspection unchecked,ConstantConditions
+    return new Attributes(name, (Map<String, Object>) child);
+  }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + "{" +
+        "key='" + key + '\'' +
+        ", map=" + map +
+        '}';
+  }
+
+  //
+  // Coercion support
+  //
+
+  //public <T> T get(final String name, final Class<T> type) {
+  //  checkNotNull(name);
+  //  checkNotNull(type);
+  //
+  //  // TODO:
+  //  return null;
+  //}
+
+  //public <T> void set(final String name, final Class<T> type, final T value) {
+  //  checkNotNull(name);
+  //  checkNotNull(type);
+  //  checkNotNull(value);
+  //
+  //  // TODO:
+  //}
 }

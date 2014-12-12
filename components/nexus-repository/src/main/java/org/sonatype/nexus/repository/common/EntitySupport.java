@@ -10,27 +10,27 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
-package org.sonatype.nexus.repository.config;
+package org.sonatype.nexus.repository.common;
 
-import org.sonatype.nexus.repository.Facet;
+import javax.annotation.Nullable;
 
 /**
- * Configuration {@link Facet}.
+ * {@link Entity} support.
  *
  * @since 3.0
  */
-public interface ConfigurationFacet
-  extends Facet
+public abstract class EntitySupport
+  implements Entity
 {
-  Configuration get();
+  private EntityHandle handle;
 
-  /**
-   * Update the configuration of a repository, informing all facets of the change, and save the configuration.
-   */
-  void update(Configuration configuration) throws Exception;
+  @Nullable
+  @Override
+  public EntityHandle getEntityHandle() {
+    return handle;
+  }
 
-  /**
-   * Persist configuration.
-   */
-  void save(Configuration configuration) throws Exception;
+  public void setEntityHandle(final @Nullable EntityHandle entityHandle) {
+    this.handle = entityHandle;
+  }
 }

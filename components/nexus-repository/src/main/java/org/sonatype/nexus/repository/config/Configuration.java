@@ -10,23 +10,73 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
+
 package org.sonatype.nexus.repository.config;
 
-import org.sonatype.nexus.repository.common.Entity;
+import java.util.Map;
+
+import org.sonatype.nexus.repository.common.EntitySupport;
+
+import com.google.common.collect.Maps;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * ???
+ * Repository configuration.
  *
  * @since 3.0
  */
-public interface Configuration
-  extends Entity
+public class Configuration
+    extends EntitySupport
 {
-  String getRecipe();
+  private String recipeName;
 
-  String getRepository();
+  private String repositoryName;
 
-  Attributes getAttributes(String key);
+  private Map<String, Map<String, Object>> attributes = Maps.newHashMap();
 
-  void setAttributes(String key, Attributes attributes);
+  public String getRecipeName() {
+    return recipeName;
+  }
+
+  public void setRecipeName(final String recipeName) {
+    this.recipeName = checkNotNull(recipeName);
+  }
+
+  public String getRepositoryName() {
+    return repositoryName;
+  }
+
+  public void setRepositoryName(final String repositoryName) {
+    this.repositoryName = checkNotNull(repositoryName);
+  }
+
+  public Map<String, Map<String, Object>> getAttributes() {
+    return attributes;
+  }
+
+  public void setAttributes(final Map<String, Map<String, Object>> attributes) {
+    this.attributes = checkNotNull(attributes);
+  }
+
+  public Attributes attributes(final String key) {
+    checkNotNull(key);
+
+    Map<String,Object> map = attributes.get(key);
+    if (map == null) {
+      map = Maps.newHashMap();
+      attributes.put(key, map);
+    }
+
+    return new Attributes(key, map);
+  }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + "{" +
+        "recipeName='" + recipeName + '\'' +
+        ", repositoryName='" + repositoryName + '\'' +
+        ", attributes=" + attributes +
+        '}';
+  }
 }
