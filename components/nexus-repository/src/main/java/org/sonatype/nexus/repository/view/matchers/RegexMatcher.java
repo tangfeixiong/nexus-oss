@@ -27,6 +27,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class RegexMatcher
   implements Matcher
 {
+  public static final String RESULT = RegexMatcher.class.getName() + ".RESULT";
+
   private final Pattern pattern;
 
   public RegexMatcher(final Pattern pattern) {
@@ -36,6 +38,12 @@ public class RegexMatcher
   @Override
   public boolean matches(final Context context) {
     checkNotNull(context);
-    return pattern.matcher(context.getRequest().getPath()).matches();
+    java.util.regex.Matcher m = pattern.matcher(context.getRequest().getPath());
+    if (m.matches()) {
+      // expose match result in context
+      context.set(RESULT, m);
+      return true;
+    }
+    return false;
   }
 }
