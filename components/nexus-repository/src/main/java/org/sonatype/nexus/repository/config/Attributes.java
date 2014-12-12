@@ -27,13 +27,26 @@ import static com.google.common.base.Preconditions.checkState;
  */
 public class Attributes
 {
+  @Nullable
+  private final Attributes parent;
+
   private final String key;
 
   private final Map<String,Object> map;
 
   public Attributes(final String key, final Map<String, Object> map) {
+    this(null, key, map);
+  }
+
+  private Attributes(final Attributes parent, final String key, final Map<String, Object> map) {
+    this.parent = parent;
     this.key = checkNotNull(key);
     this.map = checkNotNull(map);
+  }
+
+  @Nullable
+  public Attributes getParent() {
+    return parent;
   }
 
   public String getKey() {
@@ -75,7 +88,7 @@ public class Attributes
       checkState(child instanceof Map, "child '%s' not a Map", name);
     }
     //noinspection unchecked,ConstantConditions
-    return new Attributes(name, (Map<String, Object>) child);
+    return new Attributes(this, name, (Map<String, Object>) child);
   }
 
   @Override
