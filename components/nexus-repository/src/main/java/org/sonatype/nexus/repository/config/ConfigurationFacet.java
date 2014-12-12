@@ -25,4 +25,6 @@ public interface ConfigurationFacet
   Configuration get();
 
   void update(Configuration configuration) throws Exception;
+
+  void save(Configuration configuration) throws Exception;
 }

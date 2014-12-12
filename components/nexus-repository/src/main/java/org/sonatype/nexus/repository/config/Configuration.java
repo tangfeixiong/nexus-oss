@@ -26,7 +26,4 @@ public interface Configuration
   Attributes getAttributes(String key);
 
   void setAttributes(String key, Attributes attributes);
-
-  // FIXME: This implies the instance is aware of the store, maybe move to ConfigurationFacet.save(Configuration)
-  void save() throws Exception;
 }
