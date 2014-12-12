@@ -15,7 +15,6 @@ package org.sonatype.nexus.repository.manager;
 import javax.annotation.Nullable;
 
 import org.sonatype.nexus.repository.Repository;
-import org.sonatype.nexus.repository.RepositoryIdentifier;
 import org.sonatype.nexus.repository.config.Configuration;
 
 /**
@@ -32,11 +31,11 @@ public interface RepositoryManager
   Iterable<Repository> browse();
 
   @Nullable
-  Repository read(RepositoryIdentifier identifier);
+  Repository read(String name);
 
   Repository create(Configuration configuration) throws Exception;
 
-  Repository edit(RepositoryIdentifier identifier, Configuration configuration) throws Exception;
+  Repository edit(Configuration configuration) throws Exception;
 
-  void delete(RepositoryIdentifier identifier) throws Exception;
+  void delete(String name) throws Exception;
 }

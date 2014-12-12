@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.repository.config.internal;
 
+import org.sonatype.nexus.repository.common.EntityIdentifier;
+
 /**
  * ???
  *
@@ -19,7 +21,7 @@ package org.sonatype.nexus.repository.config.internal;
  */
 public class ConfigurationEntity
 {
-  // identifier
+  private EntityIdentifier identifier;
 
   // recipe
 

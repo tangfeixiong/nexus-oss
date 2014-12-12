@@ -21,13 +21,11 @@ import org.sonatype.nexus.repository.config.Configuration;
  */
 public interface Repository
 {
-  RepositoryIdentifier getIdentifier();
-
   Type getType();
 
   Format getFormat();
 
-  String getName();
+  String getName(); // TODO: rename to key?
 
   void init(Configuration configuration) throws Exception;
 
