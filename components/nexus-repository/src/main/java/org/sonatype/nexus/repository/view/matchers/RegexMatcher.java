@@ -27,7 +27,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class RegexMatcher
   implements Matcher
 {
-  public static final String CTX_RESULT = RegexMatcher.class.getName() + ".result";
+  public static interface Result
+  {
+    java.util.regex.Matcher getMatcher();
+  }
 
   private final Pattern pattern;
 
@@ -39,10 +42,15 @@ public class RegexMatcher
   @Override
   public boolean matches(final Context context) {
     checkNotNull(context);
-    java.util.regex.Matcher m = pattern.matcher(context.getRequest().getPath());
+    final java.util.regex.Matcher m = pattern.matcher(context.getRequest().getPath());
     if (m.matches()) {
       // expose match result in context
-      context.set(CTX_RESULT, m);
+      context.set(Result.class, new Result() {
+        @Override
+        public java.util.regex.Matcher getMatcher() {
+          return m;
+        }
+      });
       return true;
     }
     return false;
