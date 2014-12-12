@@ -13,7 +13,7 @@
 package org.sonatype.nexus.repository;
 
 /**
- * ???
+ * Thrown when requested {@link Facet} does not exist.
  *
  * @since 3.0
  */

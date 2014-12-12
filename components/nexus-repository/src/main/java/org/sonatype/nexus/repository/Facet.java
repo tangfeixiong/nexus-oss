@@ -13,7 +13,7 @@
 package org.sonatype.nexus.repository;
 
 /**
- * ???
+ * Repository facet.
  *
  * @since 3.0
  */
