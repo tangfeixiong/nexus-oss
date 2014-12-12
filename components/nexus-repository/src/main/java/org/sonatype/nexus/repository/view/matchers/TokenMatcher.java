@@ -12,8 +12,6 @@
  */
 package org.sonatype.nexus.repository.view.matchers;
 
-import java.util.regex.Pattern;
-
 import org.sonatype.nexus.repository.view.Context;
 import org.sonatype.nexus.repository.view.Matcher;
 
@@ -24,18 +22,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @since 3.0
  */
-public class RegexMatch
+public class TokenMatcher
   implements Matcher
 {
-  private final Pattern pattern;
-
-  public RegexMatch(final Pattern pattern) {
-    this.pattern = pattern;
-  }
-
   @Override
   public boolean matches(final Context context) {
     checkNotNull(context);
-    return pattern.matcher(context.getRequest().getPath()).matches();
+    // TODO:
+    throw new Error("Not implemented");
   }
 }
