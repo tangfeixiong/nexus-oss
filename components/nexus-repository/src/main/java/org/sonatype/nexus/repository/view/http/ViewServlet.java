@@ -81,6 +81,7 @@ public class ViewServlet
     String key = "TODO";
     Repository repo = repositoryManager.read(key);
     checkState(repo != null, "Missing repository: %s", key);
+    //noinspection ConstantConditions
     return repo;
   }
 
@@ -89,6 +90,7 @@ public class ViewServlet
     String format = repository.getFormat().value();
     HttpResponseSender sender = responseSenders.get(format);
     checkState(sender != null, "Missing HTTP response sender: %s", sender);
+    //noinspection ConstantConditions
     return sender;
   }
 }
