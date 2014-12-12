@@ -35,8 +35,7 @@ public class RegexMatcher
   private final Pattern pattern;
 
   public RegexMatcher(final Pattern pattern) {
-    checkNotNull(pattern);
-    this.pattern = pattern;
+    this.pattern = checkNotNull(pattern);
   }
 
   @Override
