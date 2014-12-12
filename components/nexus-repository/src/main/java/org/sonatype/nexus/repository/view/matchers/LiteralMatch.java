@@ -36,6 +36,7 @@ public class LiteralMatch
 
   @Override
   public boolean matches(final Context context) {
+    checkNotNull(context);
     if (ignoreCase) {
       return context.getRequest().getPath().equalsIgnoreCase(literal);
     }
