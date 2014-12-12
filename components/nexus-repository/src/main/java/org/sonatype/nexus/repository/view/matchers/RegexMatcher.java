@@ -27,7 +27,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class RegexMatcher
   implements Matcher
 {
-  public static final String RESULT = RegexMatcher.class.getName() + ".RESULT";
+  public static final String CTX_RESULT = RegexMatcher.class.getName() + ".result";
 
   private final Pattern pattern;
 
@@ -41,7 +41,7 @@ public class RegexMatcher
     java.util.regex.Matcher m = pattern.matcher(context.getRequest().getPath());
     if (m.matches()) {
       // expose match result in context
-      context.set(RESULT, m);
+      context.set(CTX_RESULT, m);
       return true;
     }
     return false;
