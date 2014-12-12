@@ -21,7 +21,7 @@ import java.io.InputStream;
  */
 public interface Payload
 {
-  String getMimeType();
+  String getContentType();
 
   long getSize();
 
