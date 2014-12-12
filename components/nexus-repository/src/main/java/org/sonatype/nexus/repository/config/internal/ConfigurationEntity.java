@@ -12,6 +12,8 @@
  */
 package org.sonatype.nexus.repository.config.internal;
 
+import java.util.Map;
+
 import org.sonatype.nexus.repository.common.EntityIdentifier;
 
 /**
@@ -23,9 +25,9 @@ public class ConfigurationEntity
 {
   private EntityIdentifier identifier;
 
-  // recipe
+  private String recipe;
 
-  // repository
+  private String repository;
 
-  // attributes
+  private Map<String,Map<String,Object>> attributes;
 }
