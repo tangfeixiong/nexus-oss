@@ -13,6 +13,7 @@
 package org.sonatype.nexus.repository.view.http;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,15 +39,20 @@ public class ViewServlet
 {
   private final RepositoryManager repositoryManager;
 
+  private final Map<String,HttpResponseSender> responseSenders;
+
   @Inject
-  public ViewServlet(final RepositoryManager repositoryManager) {
+  public ViewServlet(final RepositoryManager repositoryManager,
+                     final Map<String,HttpResponseSender> responseSenders)
+  {
     this.repositoryManager = checkNotNull(repositoryManager);
+    this.responseSenders = checkNotNull(responseSenders);
   }
 
   @Override
   protected void service(final HttpServletRequest req, final HttpServletResponse resp)
       throws ServletException, IOException
   {
-    super.service(req, resp);
+    // TODO:
   }
 }
