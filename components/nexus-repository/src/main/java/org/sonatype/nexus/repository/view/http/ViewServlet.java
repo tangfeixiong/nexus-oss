@@ -78,6 +78,9 @@ public class ViewServlet
     sender(repo).send(response, resp);
   }
 
+  /**
+   * Find repository for given request.
+   */
   @Nonnull
   private Repository repository(final HttpServletRequest request) {
     String key = "TODO"; // decode from request
@@ -87,6 +90,9 @@ public class ViewServlet
     return repo;
   }
 
+  /**
+   * Find sender for repository format.
+   */
   @Nonnull
   private HttpResponseSender sender(final Repository repository) {
     String format = repository.getFormat().value();
