@@ -59,4 +59,11 @@ public class RegexMatcher
     // no match
     return false;
   }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + "{" +
+        "pattern=" + pattern +
+        '}';
+  }
 }

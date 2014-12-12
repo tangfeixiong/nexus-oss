@@ -44,4 +44,12 @@ public class LiteralMatcherer
       return context.getRequest().getPath().equals(literal);
     }
   }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + "{" +
+        "literal='" + literal + '\'' +
+        ", ignoreCase=" + ignoreCase +
+        '}';
+  }
 }
