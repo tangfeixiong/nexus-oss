@@ -41,10 +41,13 @@ public class RegexMatcher
   @Override
   public boolean matches(final Context context) {
     checkNotNull(context);
+
     final java.util.regex.Matcher m = pattern.matcher(context.getRequest().getPath());
+
     if (m.matches()) {
       // expose match result in context
-      context.set(Result.class, new Result() {
+      context.set(Result.class, new Result()
+      {
         @Override
         public java.util.regex.Matcher getMatcher() {
           return m;
@@ -52,6 +55,8 @@ public class RegexMatcher
       });
       return true;
     }
+
+    // no match
     return false;
   }
 }
