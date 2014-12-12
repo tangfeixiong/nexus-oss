@@ -14,19 +14,35 @@ package org.sonatype.nexus.repository.view.http;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.sonatype.nexus.repository.manager.RepositoryManager;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * ???
  *
  * @since 3.0
  */
+@Named
+@Singleton
 public class ViewServlet
   extends HttpServlet
 {
+  private final RepositoryManager repositoryManager;
+
+  @Inject
+  public ViewServlet(final RepositoryManager repositoryManager) {
+    this.repositoryManager = checkNotNull(repositoryManager);
+  }
+
   @Override
   protected void service(final HttpServletRequest req, final HttpServletResponse resp)
       throws ServletException, IOException
