@@ -22,6 +22,15 @@ import java.util.Map;
  */
 public interface Response
 {
+  interface Status
+  {
+    boolean isSuccessful();
+
+    int getCode();
+
+    String getMessage();
+  }
+
   Status getStatus();
 
   Headers getHeaders();
