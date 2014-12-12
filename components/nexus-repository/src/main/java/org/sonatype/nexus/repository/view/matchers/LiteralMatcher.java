@@ -22,14 +22,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @since 3.0
  */
-public class LiteralMatcherer
+public class LiteralMatcher
   implements Matcher
 {
   private final String literal;
 
   private final boolean ignoreCase;
 
-  public LiteralMatcherer(final String literal, final boolean ignoreCase) {
+  public LiteralMatcher(final String literal, final boolean ignoreCase) {
     this.literal = checkNotNull(literal);
     this.ignoreCase = ignoreCase;
   }
