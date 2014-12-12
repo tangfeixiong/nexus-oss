@@ -15,7 +15,7 @@ package org.sonatype.nexus.repository.common;
 import javax.annotation.Nullable;
 
 /**
- * ???
+ * Entity.
  *
  * @since 3.0
  */

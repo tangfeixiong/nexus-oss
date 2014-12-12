@@ -12,12 +12,52 @@
  */
 package org.sonatype.nexus.repository.common;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
- * ???
+ * Entity version.
  *
  * @since 3.0
  */
-public interface EntityVersion
+public class EntityVersion
 {
-  String value();
+  private final String value;
+
+  public EntityVersion(final String value) {
+    this.value = checkNotNull(value);
+  }
+
+  public String getValue() {
+    return value;
+  }
+
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    EntityVersion that = (EntityVersion) o;
+
+    if (!value.equals(that.value)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    return value.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + "{" +
+        "value='" + value + '\'' +
+        '}';
+  }
 }

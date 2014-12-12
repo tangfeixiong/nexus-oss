@@ -13,7 +13,7 @@
 package org.sonatype.nexus.repository.common;
 
 /**
- * ???
+ * {@link EntityId} factory.
  *
  * @since 3.0
  */

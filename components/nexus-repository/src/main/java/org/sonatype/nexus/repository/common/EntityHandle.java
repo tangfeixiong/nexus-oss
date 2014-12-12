@@ -12,14 +12,37 @@
  */
 package org.sonatype.nexus.repository.common;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
- * ???
+ * Entity handle.
  *
  * @since 3.0
  */
-public interface EntityHandle
+public class EntityHandle
 {
-  EntityId getId();
+  private final EntityId id;
 
-  EntityVersion getVersion();
+  private final EntityVersion version;
+
+  public EntityHandle(final EntityId id, final EntityVersion version) {
+    this.id = checkNotNull(id);
+    this.version = checkNotNull(version);
+  }
+
+  public EntityId getId() {
+    return id;
+  }
+
+  public EntityVersion getVersion() {
+    return version;
+  }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + "{" +
+        "id=" + id +
+        ", version=" + version +
+        '}';
+  }
 }
