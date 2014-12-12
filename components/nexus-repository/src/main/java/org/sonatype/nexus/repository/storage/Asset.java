@@ -12,11 +12,14 @@
  */
 package org.sonatype.nexus.repository.storage;
 
+import org.sonatype.nexus.repository.common.Entity;
+
 /**
  * ???
  *
  * @since 3.0
  */
 public interface Asset
+  extends Entity
 {
 }

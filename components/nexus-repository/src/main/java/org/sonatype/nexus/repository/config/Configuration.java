@@ -12,12 +12,15 @@
  */
 package org.sonatype.nexus.repository.config;
 
+import org.sonatype.nexus.repository.common.Entity;
+
 /**
  * ???
  *
  * @since 3.0
  */
 public interface Configuration
+  extends Entity
 {
   String getRecipe();
 
