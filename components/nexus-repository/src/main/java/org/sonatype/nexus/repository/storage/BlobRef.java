@@ -19,4 +19,11 @@ package org.sonatype.nexus.repository.storage;
  */
 public interface BlobRef
 {
+  // <store>@<node>:<blob>
+
+  String getNode();
+
+  String getStore();
+
+  String getBlob();
 }
