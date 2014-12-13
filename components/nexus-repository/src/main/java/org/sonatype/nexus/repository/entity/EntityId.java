@@ -10,39 +10,54 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
-package org.sonatype.nexus.repository.common;
+package org.sonatype.nexus.repository.entity;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Entity handle.
+ * Entity identifier.
  *
  * @since 3.0
  */
-public class EntityHandle
+public class EntityId
 {
-  private final EntityId id;
+  private final String value;
 
-  private final EntityVersion version;
-
-  public EntityHandle(final EntityId id, final EntityVersion version) {
-    this.id = checkNotNull(id);
-    this.version = checkNotNull(version);
+  public EntityId(final String value) {
+    this.value = checkNotNull(value);
   }
 
-  public EntityId getId() {
-    return id;
+  public String getValue() {
+    return value;
   }
 
-  public EntityVersion getVersion() {
-    return version;
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    EntityId entityId = (EntityId) o;
+
+    if (!value.equals(entityId.value)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    return value.hashCode();
   }
 
   @Override
   public String toString() {
     return getClass().getSimpleName() + "{" +
-        "id=" + id +
-        ", version=" + version +
+        "value='" + value + '\'' +
         '}';
   }
 }

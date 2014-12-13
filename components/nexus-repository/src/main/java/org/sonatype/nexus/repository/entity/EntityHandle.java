@@ -10,17 +10,39 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
-package org.sonatype.nexus.repository.common;
+package org.sonatype.nexus.repository.entity;
 
-import javax.annotation.Nullable;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Entity.
+ * Entity handle.
  *
  * @since 3.0
  */
-public interface Entity
+public class EntityHandle
 {
-  @Nullable
-  EntityHandle getEntityHandle();
+  private final EntityId id;
+
+  private final EntityVersion version;
+
+  public EntityHandle(final EntityId id, final EntityVersion version) {
+    this.id = checkNotNull(id);
+    this.version = checkNotNull(version);
+  }
+
+  public EntityId getId() {
+    return id;
+  }
+
+  public EntityVersion getVersion() {
+    return version;
+  }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + "{" +
+        "id=" + id +
+        ", version=" + version +
+        '}';
+  }
 }

@@ -15,7 +15,7 @@ package org.sonatype.nexus.repository.config;
 
 import java.util.Map;
 
-import org.sonatype.nexus.repository.common.EntitySupport;
+import org.sonatype.nexus.repository.entity.EntitySupport;
 
 import com.google.common.collect.Maps;
 

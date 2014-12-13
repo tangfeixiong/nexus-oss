@@ -10,54 +10,20 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
-package org.sonatype.nexus.repository.common;
+package org.sonatype.nexus.repository.entity;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.util.UUID;
 
 /**
- * Entity identifier.
+ * {@link UUID} backed {@link EntityIdFactory}.
  *
  * @since 3.0
  */
-public class EntityId
+public class UuidEntityIdFactory
+  implements EntityIdFactory
 {
-  private final String value;
-
-  public EntityId(final String value) {
-    this.value = checkNotNull(value);
-  }
-
-  public String getValue() {
-    return value;
-  }
-
   @Override
-  public boolean equals(final Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-
-    EntityId entityId = (EntityId) o;
-
-    if (!value.equals(entityId.value)) {
-      return false;
-    }
-
-    return true;
-  }
-
-  @Override
-  public int hashCode() {
-    return value.hashCode();
-  }
-
-  @Override
-  public String toString() {
-    return getClass().getSimpleName() + "{" +
-        "value='" + value + '\'' +
-        '}';
+  public EntityId create() {
+    return new EntityId(UUID.randomUUID().toString());
   }
 }

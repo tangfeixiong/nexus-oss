@@ -10,20 +10,30 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
-package org.sonatype.nexus.repository.common;
+package org.sonatype.nexus.repository.entity;
 
-import java.util.UUID;
+import javax.annotation.Nullable;
 
 /**
- * {@link UUID} backed {@link EntityIdFactory}.
+ * {@link Entity} support.
  *
  * @since 3.0
  */
-public class UuidEntityIdFactory
-  implements EntityIdFactory
+public abstract class EntitySupport
+  implements Entity
 {
+  private EntityHandle handle;
+
+  @Nullable
   @Override
-  public EntityId create() {
-    return new EntityId(UUID.randomUUID().toString());
+  public EntityHandle getEntityHandle() {
+    return handle;
+  }
+
+  // FIXME: Sort out if there is any valid use-case to null a handle or not?
+  // FIXME: If not make this non-nullable and add precondition for sanity
+
+  public void setEntityHandle(final @Nullable EntityHandle handle) {
+    this.handle = handle;
   }
 }
