@@ -55,6 +55,18 @@ public class Attributes
     return parent;
   }
 
+  @VisibleForTesting
+  String getParentKey() {
+    if (parent != null) {
+      // fully-qualify parent key if it has a grandparent
+      if (parent.parent != null) {
+        return parent.getParentKey() + GRANDPARENT_SEPARATOR + parent.getKey();
+      }
+      return parent.getKey();
+    }
+    return null;
+  }
+
   public String getKey() {
     return key;
   }
@@ -97,22 +109,10 @@ public class Attributes
     return new Attributes(this, name, (Map<String, Object>) child);
   }
 
-  @VisibleForTesting
-  String parentKey() {
-    if (parent != null) {
-      // fully-qualify parent key if it has a grandparent
-      if (parent.parent != null) {
-        return parent.parentKey() + GRANDPARENT_SEPARATOR + parent.getKey();
-      }
-      return parent.getKey();
-    }
-    return null;
-  }
-
   @Override
   public String toString() {
     return getClass().getSimpleName() + "{" +
-        "parent=" + parentKey() +
+        "parent=" + getParentKey() +
         ", key='" + key + '\'' +
         ", map=" + map +
         '}';

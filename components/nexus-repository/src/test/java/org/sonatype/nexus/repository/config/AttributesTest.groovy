@@ -14,7 +14,8 @@ class AttributesTest
   @Test
   void 'parentKey null when no parent'() {
     Attributes child = new Attributes('foo', [:])
-    assert child.parentKey() == null
+    assert child.key == 'foo'
+    assert child.parentKey == null
   }
 
   @Test
@@ -23,6 +24,7 @@ class AttributesTest
     Attributes parent = grandparent.child('bar')
     Attributes child = parent.child('baz')
 
-    assert "foo${GRANDPARENT_SEPARATOR}bar" == child.parentKey()
+    assert child.key == 'baz'
+    assert "foo${GRANDPARENT_SEPARATOR}bar" == child.parentKey
   }
 }
