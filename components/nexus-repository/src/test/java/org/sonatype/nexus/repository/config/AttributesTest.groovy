@@ -36,6 +36,8 @@ class AttributesTest
     Attributes parent = grandparent.child('bar')
     Attributes child = parent.child('baz')
 
+    assert grandparent.key == 'foo'
+    assert parent.key == 'bar'
     assert child.key == 'baz'
     assert "foo${GRANDPARENT_SEPARATOR}bar" == child.parentKey
   }
