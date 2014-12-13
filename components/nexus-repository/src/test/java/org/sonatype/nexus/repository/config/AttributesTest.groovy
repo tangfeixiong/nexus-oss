@@ -15,6 +15,7 @@ package org.sonatype.nexus.repository.config
 import org.junit.Test
 import org.sonatype.sisu.litmus.testsupport.TestSupport
 
+import static org.junit.Assert.fail
 import static org.sonatype.nexus.repository.config.Attributes.GRANDPARENT_SEPARATOR
 
 /**
@@ -40,5 +41,31 @@ class AttributesTest
     assert parent.key == 'bar'
     assert child.key == 'baz'
     assert "foo${GRANDPARENT_SEPARATOR}bar" == child.parentKey
+  }
+
+  @Test
+  void 'set with map value fails'() {
+    Attributes attributes = new Attributes('foo', [:])
+    try {
+      attributes.set('invalid', [:])
+      fail()
+    }
+    catch (IllegalStateException e) {
+      // expected
+    }
+  }
+
+  @Test
+  void 'child() with non-map value fails'() {
+    Attributes attributes = new Attributes('foo', [:])
+    attributes.set('value', false)
+
+    try {
+      attributes.child('value')
+      fail()
+    }
+    catch (IllegalStateException e) {
+      // expected
+    }
   }
 }
