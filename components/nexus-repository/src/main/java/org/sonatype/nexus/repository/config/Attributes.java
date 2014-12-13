@@ -17,6 +17,8 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
@@ -27,6 +29,9 @@ import static com.google.common.base.Preconditions.checkState;
  */
 public class Attributes
 {
+  @VisibleForTesting
+  static final String GRANDPARENT_SEPARATOR = "::";
+
   @Nullable
   private final Attributes parent;
 
@@ -38,7 +43,8 @@ public class Attributes
     this(null, key, map);
   }
 
-  private Attributes(final Attributes parent, final String key, final Map<String, Object> map) {
+  @VisibleForTesting
+  Attributes(final @Nullable Attributes parent, final String key, final Map<String, Object> map) {
     this.parent = parent;
     this.key = checkNotNull(key);
     this.map = checkNotNull(map);
@@ -91,10 +97,23 @@ public class Attributes
     return new Attributes(this, name, (Map<String, Object>) child);
   }
 
+  @VisibleForTesting
+  String parentKey() {
+    if (parent != null) {
+      // fully-qualify parent key if it has a grandparent
+      if (parent.parent != null) {
+        return parent.parentKey() + GRANDPARENT_SEPARATOR + parent.getKey();
+      }
+      return parent.getKey();
+    }
+    return null;
+  }
+
   @Override
   public String toString() {
     return getClass().getSimpleName() + "{" +
-        "key='" + key + '\'' +
+        "parent=" + parentKey() +
+        ", key='" + key + '\'' +
         ", map=" + map +
         '}';
   }
