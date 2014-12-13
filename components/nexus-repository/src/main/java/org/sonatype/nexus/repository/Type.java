@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @since 3.0
  */
-public class Type
+public abstract class Type
 {
   private final String value;
 
