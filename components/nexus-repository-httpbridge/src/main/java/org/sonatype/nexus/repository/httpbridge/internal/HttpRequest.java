@@ -10,7 +10,7 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
-package org.sonatype.nexus.repository.view.http;
+package org.sonatype.nexus.repository.httpbridge.internal;
 
 import java.util.Map;
 
@@ -26,7 +26,7 @@ import org.sonatype.nexus.repository.view.Request;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * ???
+ * {@link Request} adapter for {@link HttpServletRequest}.
  *
  * @since 3.0
  */
@@ -49,32 +49,38 @@ public class HttpRequest
 
   @Override
   public String getAction() {
+    // TODO:
     return null;
   }
 
   @Override
   public String getPath() {
+    // TODO:
     return null;
   }
 
   @Override
   public Map<String, Object> getAttributes() {
+    // TODO:
     return null;
   }
 
   @Override
   public Parameters getParameters() {
+    // TODO:
     return null;
   }
 
   @Override
   public Headers getHeaders() {
+    // TODO:
     return null;
   }
 
   @Nullable
   @Override
   public Payload getPayload() {
+    // TODO:
     return null;
   }
 }
