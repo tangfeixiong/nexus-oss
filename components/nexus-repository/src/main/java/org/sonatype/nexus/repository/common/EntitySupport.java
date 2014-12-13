@@ -30,7 +30,10 @@ public abstract class EntitySupport
     return handle;
   }
 
-  public void setEntityHandle(final @Nullable EntityHandle entityHandle) {
-    this.handle = entityHandle;
+  // FIXME: Sort out if there is any valid use-case to null a handle or not?
+  // FIXME: If not make this non-nullable and add precondition for sanity
+
+  public void setEntityHandle(final @Nullable EntityHandle handle) {
+    this.handle = handle;
   }
 }
