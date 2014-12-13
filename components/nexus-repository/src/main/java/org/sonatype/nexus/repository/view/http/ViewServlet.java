@@ -95,7 +95,7 @@ public class ViewServlet
    */
   @Nonnull
   private HttpResponseSender sender(final Repository repository) {
-    String format = repository.getFormat().value();
+    String format = repository.getFormat().getValue();
     HttpResponseSender sender = responseSenders.get(format);
     checkState(sender != null, "No HTTP response sender for format: %s", format);
     //noinspection ConstantConditions
