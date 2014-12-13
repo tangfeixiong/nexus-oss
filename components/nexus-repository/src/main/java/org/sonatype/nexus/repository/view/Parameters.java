@@ -19,5 +19,7 @@ package org.sonatype.nexus.repository.view;
  */
 public interface Parameters
 {
+  // intended to be a generic (javax.servlet) free wrapper around HTTP request query parameters
+
   // helper around Map<String,String>
 }

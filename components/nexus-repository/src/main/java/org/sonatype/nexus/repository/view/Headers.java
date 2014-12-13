@@ -19,5 +19,7 @@ package org.sonatype.nexus.repository.view;
  */
 public interface Headers
 {
+  // intended to be a generic (javax.servlet) free wrapper around HTTP headers
+
   // helper around Multimap<String,String>
 }
