@@ -12,10 +12,13 @@
  */
 package org.sonatype.nexus.repository.config;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.sonatype.nexus.repository.Repository;
 import org.sonatype.sisu.goodies.common.ComponentSupport;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Default {@link ConfigurationFacet} implementation.
@@ -27,6 +30,13 @@ public class ConfigurationFacetImpl
   extends ComponentSupport
   implements ConfigurationFacet
 {
+  private final ConfigurationStore store;
+
+  @Inject
+  public ConfigurationFacetImpl(final ConfigurationStore store) {
+    this.store = checkNotNull(store);
+  }
+
   @Override
   public void init(final Repository repository) throws Exception {
     // TODO
