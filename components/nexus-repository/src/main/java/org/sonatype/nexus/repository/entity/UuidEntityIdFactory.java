@@ -14,11 +14,16 @@ package org.sonatype.nexus.repository.entity;
 
 import java.util.UUID;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
+
 /**
  * {@link UUID} backed {@link EntityIdFactory}.
  *
  * @since 3.0
  */
+@Named("uuid")
+@Singleton
 public class UuidEntityIdFactory
   implements EntityIdFactory
 {

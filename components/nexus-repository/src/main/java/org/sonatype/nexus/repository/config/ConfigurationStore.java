@@ -14,17 +14,16 @@ package org.sonatype.nexus.repository.config;
 
 import javax.annotation.Nullable;
 
+import org.sonatype.sisu.goodies.lifecycle.Lifecycle;
+
 /**
  * {@link Configuration} store.
  *
  * @since 3.0
  */
 public interface ConfigurationStore
+  extends Lifecycle
 {
-  void start() throws Exception;
-
-  void stop() throws Exception;
-
   Iterable<Configuration> browse();
 
   @Nullable
