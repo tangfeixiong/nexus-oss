@@ -71,6 +71,8 @@ public class ConfigurationStoreImpl
     entityType = null;
   }
 
+  // TODO: Hookup to NX lifecycle
+
   private ODatabaseDocumentTx openDb() {
     ensureStarted();
     return databaseInstance.get().acquire();
