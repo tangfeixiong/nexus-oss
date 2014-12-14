@@ -28,7 +28,7 @@ import com.orientechnologies.orient.core.metadata.schema.OClass;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@link Configuration} store.
+ * Orient {@link ConfigurationStore}.
  *
  * @since 3.0
  */
