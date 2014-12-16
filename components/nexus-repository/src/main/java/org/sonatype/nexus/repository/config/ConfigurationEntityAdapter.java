@@ -43,9 +43,9 @@ public class ConfigurationEntityAdapter
       .type(Configuration.class)
       .build();
 
-  private static final String P_RECIPE_NAME = "recipeName";
+  private static final String P_RECIPE_NAME = "recipe_name";
 
-  private static final String P_REPOSITORY_NAME = "repositoryName";
+  private static final String P_REPOSITORY_NAME = "repository_name";
 
   private static final String P_ATTRIBUTES = "attributes";
 
