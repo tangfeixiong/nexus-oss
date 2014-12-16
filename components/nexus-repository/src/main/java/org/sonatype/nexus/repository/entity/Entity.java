@@ -22,5 +22,5 @@ import javax.annotation.Nullable;
 public interface Entity
 {
   @Nullable
-  EntityHandle getEntityHandle();
+  EntityMetadata getEntityMetadata();
 }

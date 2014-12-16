@@ -90,7 +90,7 @@ public class ConfigurationEntityAdapter
     entity.setRepositoryName(repositoryName);
     entity.setAttributes(attributes);
 
-    // TODO: Where is handle installed?
+    // TODO: Where is metadata installed?
 
     return entity;
   }

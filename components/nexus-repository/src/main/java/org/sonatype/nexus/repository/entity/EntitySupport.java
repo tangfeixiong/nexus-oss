@@ -22,18 +22,18 @@ import javax.annotation.Nullable;
 public abstract class EntitySupport
   implements Entity
 {
-  private EntityHandle handle;
+  private EntityMetadata metadata;
 
   @Nullable
   @Override
-  public EntityHandle getEntityHandle() {
-    return handle;
+  public EntityMetadata getEntityMetadata() {
+    return metadata;
   }
 
-  // FIXME: Sort out if there is any valid use-case to null a handle or not?
+  // FIXME: Sort out if there is any valid use-case to null a metadata or not?
   // FIXME: If not make this non-nullable and add precondition for sanity
 
-  public void setEntityHandle(final @Nullable EntityHandle handle) {
-    this.handle = handle;
+  public void setEntityMetadata(final @Nullable EntityMetadata metadata) {
+    this.metadata = metadata;
   }
 }

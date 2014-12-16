@@ -15,17 +15,17 @@ package org.sonatype.nexus.repository.entity;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Entity handle.
+ * Entity metadata.
  *
  * @since 3.0
  */
-public class EntityHandle
+public class EntityMetadata
 {
   private final EntityId id;
 
   private final EntityVersion version;
 
-  public EntityHandle(final EntityId id, final EntityVersion version) {
+  public EntityMetadata(final EntityId id, final EntityVersion version) {
     this.id = checkNotNull(id);
     this.version = checkNotNull(version);
   }
