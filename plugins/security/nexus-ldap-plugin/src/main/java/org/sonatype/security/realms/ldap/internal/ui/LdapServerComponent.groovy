@@ -12,6 +12,12 @@
  */
 package org.sonatype.security.realms.ldap.internal.ui
 
+import org.sonatype.security.realms.ldap.internal.persist.entity.Connection
+import org.sonatype.security.realms.ldap.internal.persist.entity.Connection.Host
+import org.sonatype.security.realms.ldap.internal.persist.entity.Connection.Protocol
+import org.sonatype.security.realms.ldap.internal.persist.entity.LdapConfiguration
+import org.sonatype.security.realms.ldap.internal.persist.entity.Mapping
+
 import com.softwarementors.extjs.djn.config.annotations.DirectAction
 import com.softwarementors.extjs.djn.config.annotations.DirectMethod
 import org.sonatype.security.realms.ldap.internal.ssl.SSLLdapContextFactory
@@ -20,9 +26,6 @@ import com.sonatype.nexus.ssl.plugin.TrustStore
 import org.sonatype.security.realms.ldap.internal.realms.EnterpriseLdapManager
 import org.sonatype.security.realms.ldap.internal.realms.LdapConnectionUtils
 import org.sonatype.security.realms.ldap.internal.persist.LdapConfigurationManager
-import com.sonatype.security.ldap.realms.persist.model.CConnectionInfo
-import com.sonatype.security.ldap.realms.persist.model.CLdapServerConfiguration
-import com.sonatype.security.ldap.realms.persist.model.CUserAndGroupAuthConfiguration
 import org.sonatype.security.realms.ldap.internal.templates.LdapSchemaTemplate
 import org.sonatype.security.realms.ldap.internal.templates.LdapSchemaTemplateManager
 import org.apache.shiro.authz.annotation.RequiresAuthentication
@@ -133,7 +136,7 @@ extends DirectComponentSupport
   @RequiresPermissions('security:ldapconfig:update')
   @Validate(groups = [Update, Default])
   LdapServerXO update(final @NotNull(message = '[ldapServerXO] may not be null') @Valid LdapServerXO ldapServerXO) {
-    CLdapServerConfiguration existing = ldapConfigurationManager.getLdapServerConfiguration(ldapServerXO.id)
+    LdapConfiguration existing = ldapConfigurationManager.getLdapServerConfiguration(ldapServerXO.id)
     if (existing) {
       ldapConfigurationManager.updateLdapServerConfiguration(asCLdapServerConfiguration(validate(ldapServerXO), existing.connectionInfo.systemPassword))
       trustStoreKeys?.setEnabled(LdapTrustStoreKey.TYPE, ldapServerXO.id, ldapServerXO.useTrustStore)
@@ -171,11 +174,11 @@ extends DirectComponentSupport
   void verifyConnection(final @NotNull(message = '[ldapServerConnectionXO] may not be null') @Valid LdapServerConnectionXO ldapServerConnectionXO) {
     String authPassword = null
     if (ldapServerConnectionXO.id) {
-      CLdapServerConfiguration existing = ldapConfigurationManager.getLdapServerConfiguration(ldapServerConnectionXO.id)
+      LdapConfiguration existing = ldapConfigurationManager.getLdapServerConfiguration(ldapServerConnectionXO.id)
       if (!existing) {
         throw new IllegalArgumentException('LDAP server with id "' + ldapServerConnectionXO.id + '" not found')
       }
-      authPassword = existing.connectionInfo.systemPassword
+      authPassword = existing.connection.systemPassword
     }
     try {
       ldapConnectionTester.testConnection(buildLdapContextFactory(validate(ldapServerConnectionXO), authPassword))
@@ -192,11 +195,11 @@ extends DirectComponentSupport
   Collection<LdapUser> verifyUserMapping(final @NotNull(message = '[ldapServerXO] may not be null') @Valid LdapServerXO ldapServerXO) {
     String authPassword = null
     if (ldapServerXO.id) {
-      CLdapServerConfiguration existing = ldapConfigurationManager.getLdapServerConfiguration(ldapServerXO.id)
+      LdapConfiguration existing = ldapConfigurationManager.getLdapServerConfiguration(ldapServerXO.id)
       if (!existing) {
         throw new IllegalArgumentException('LDAP server with id "' + ldapServerXO.id + '" not found')
       }
-      authPassword = existing.connectionInfo.systemPassword
+      authPassword = existing.connection.systemPassword
     }
     try {
       return ldapConnectionTester.testUserAndGroupMapping(
@@ -220,11 +223,11 @@ extends DirectComponentSupport
   {
     String authPassword = null
     if (ldapServerXO.id) {
-      CLdapServerConfiguration existing = ldapConfigurationManager.getLdapServerConfiguration(ldapServerXO.id)
+      LdapConfiguration existing = ldapConfigurationManager.getLdapServerConfiguration(ldapServerXO.id)
       if (!existing) {
         throw new IllegalArgumentException('LDAP server with id "' + ldapServerXO.id + '" not found')
       }
-      authPassword = existing.connectionInfo.systemPassword
+      authPassword = existing.connection.systemPassword
     }
     try {
       ldapManager.authenticateUserTest(
@@ -238,17 +241,17 @@ extends DirectComponentSupport
     }
   }
 
-  LdapServerXO asLdapServerXO(final CLdapServerConfiguration ldapServer) {
-    CConnectionInfo connectionInfo = ldapServer.connectionInfo
-    CUserAndGroupAuthConfiguration userAndGroupConfig = ldapServer.userAndGroupConfig
+  LdapServerXO asLdapServerXO(final LdapConfiguration ldapServer) {
+    Connection connectionInfo = ldapServer.connection
+    Mapping userAndGroupConfig = ldapServer.mapping
     return new LdapServerXO(
         id: ldapServer.id,
         name: ldapServer.name,
         url: asLdapServerUrl(connectionInfo),
-        protocol: connectionInfo.protocol,
+        protocol: connectionInfo.host.protocol.name(),
         useTrustStore: trustStoreKeys?.isEnabled(LdapTrustStoreKey.TYPE, ldapServer.id),
-        host: connectionInfo.host,
-        port: connectionInfo.port,
+        host: connectionInfo.host.hostName,
+        port: connectionInfo.host.port,
         searchBase: connectionInfo.searchBase,
 
         authScheme: connectionInfo.authScheme,
@@ -260,10 +263,10 @@ extends DirectComponentSupport
         connectionRetryDelay: connectionInfo.connectionRetryDelay,
         cacheTimeout: connectionInfo.cacheTimeout,
 
-        backupMirrorEnabled: connectionInfo.backupMirrorHost,
-        backupMirrorProtocol: connectionInfo.backupMirrorProtocol,
-        backupMirrorHost: connectionInfo.backupMirrorHost,
-        backupMirrorPort: connectionInfo.backupMirrorPort > 0 ? connectionInfo.backupMirrorPort : null,
+        backupMirrorEnabled: connectionInfo.backupHost != null,
+        backupMirrorProtocol: connectionInfo.backupHost.protocol.name(),
+        backupMirrorHost: connectionInfo.backupHost.hostName,
+        backupMirrorPort: connectionInfo.backupHost.port,
 
         userBaseDn: userAndGroupConfig.userBaseDn,
         userSubtree: userAndGroupConfig.userSubtree,
@@ -286,17 +289,17 @@ extends DirectComponentSupport
     )
   }
 
-  private static String asLdapServerUrl(final CConnectionInfo connectionInfo) {
+  private static String asLdapServerUrl(final Connection connectionInfo) {
     return new LdapURL(
-        connectionInfo.getProtocol(),
-        connectionInfo.getHost(),
-        connectionInfo.getPort(),
-        connectionInfo.getSearchBase()
+        connectionInfo.host.protocol.name(),
+        connectionInfo.host.hostName,
+        connectionInfo.host.port,
+        connectionInfo.searchBase
     ).toString()
   }
 
   private static LdapSchemaTemplateXO asLdapSchemaTemplateXO(final LdapSchemaTemplate template) {
-    CUserAndGroupAuthConfiguration userAndGroupConfig = template.userAndGroupAuthConfig
+    Mapping userAndGroupConfig = template.userAndGroupAuthConfig
     return new LdapSchemaTemplateXO(
         name: template.name,
 
@@ -321,14 +324,12 @@ extends DirectComponentSupport
     )
   }
 
-  private static CLdapServerConfiguration asCLdapServerConfiguration(final LdapServerXO ldapServerXO, final String authPassword) {
-    return new CLdapServerConfiguration(
+  private static LdapConfiguration asCLdapServerConfiguration(final LdapServerXO ldapServerXO, final String authPassword) {
+    return new LdapConfiguration(
         id: ldapServerXO.id,
         name: ldapServerXO.name,
-        connectionInfo: new CConnectionInfo(
-            protocol: ldapServerXO.protocol,
-            host: ldapServerXO.host,
-            port: ldapServerXO.port ?: 0,
+        connection: new Connection(
+            host: new Host(Protocol.valueOf(ldapServerXO.protocol.name()), ldapServerXO.host, ldapServerXO.port),
             searchBase: ldapServerXO.searchBase,
 
             authScheme: ldapServerXO.authScheme,
@@ -340,11 +341,9 @@ extends DirectComponentSupport
             connectionRetryDelay: ldapServerXO.connectionRetryDelay,
             cacheTimeout: ldapServerXO.cacheTimeout,
 
-            backupMirrorProtocol: ldapServerXO.backupMirrorEnabled ? ldapServerXO.backupMirrorProtocol : null,
-            backupMirrorHost: ldapServerXO.backupMirrorEnabled ? ldapServerXO.backupMirrorHost : null,
-            backupMirrorPort: ldapServerXO.backupMirrorEnabled ? ldapServerXO.backupMirrorPort : 0
+            backupHost: ldapServerXO.backupMirrorEnabled ? new Host(Protocol.valueOf(ldapServerXO.backupMirrorProtocol.name()), ldapServerXO.backupMirrorHost, ldapServerXO.backupMirrorPort) : null
         ),
-        userAndGroupConfig: new CUserAndGroupAuthConfiguration(
+        mapping: new Mapping(
             userBaseDn: ldapServerXO.userBaseDn,
             userSubtree: ldapServerXO.userSubtree ?: false,
             userObjectClass: ldapServerXO.userObjectClass,

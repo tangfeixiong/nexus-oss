@@ -10,35 +10,41 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
-package org.sonatype.security.realms.ldap.internal.persist;
+
+package org.sonatype.security.realms.ldap.internal.persist.orient;
 
 import java.util.List;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
+
+import org.sonatype.security.realms.ldap.internal.persist.LdapConfigurationSource;
 import org.sonatype.security.realms.ldap.internal.persist.entity.LdapConfiguration;
+import org.sonatype.sisu.goodies.common.ComponentSupport;
 
-/**
- * Actual persistence mechanism of {@link LdapConfiguration}.
- */
-public interface LdapConfigurationSource
+@Named
+@Singleton
+public class OrientDBLdapConfigurationSource
+    extends ComponentSupport
+    implements LdapConfigurationSource
 {
-  /**
-   * Loads all the configuration entries as a modifiable list with undefined order. Modifications to the list are not
-   * affecting actual underlying source (ie. is not persisted).
-   */
-  List<LdapConfiguration> loadAll();
+  @Override
+  public List<LdapConfiguration> loadAll() {
+    return null;
+  }
 
-  /**
-   * Creates a new entry. Fails if ID already exists.
-   */
-  void create(LdapConfiguration ldapConfiguration);
+  @Override
+  public void create(final LdapConfiguration ldapConfiguration) {
 
-  /**
-   * Updates existing entry. Returns {@code true} if entry found and updated.
-   */
-  boolean update(LdapConfiguration ldapConfiguration);
+  }
 
-  /**
-   * Deletes existing entry. Returns {@code true} if entry found and deleted.
-   */
-  boolean delete(String id);
+  @Override
+  public boolean update(final LdapConfiguration ldapConfiguration) {
+    return false;
+  }
+
+  @Override
+  public boolean delete(final String id) {
+    return false;
+  }
 }

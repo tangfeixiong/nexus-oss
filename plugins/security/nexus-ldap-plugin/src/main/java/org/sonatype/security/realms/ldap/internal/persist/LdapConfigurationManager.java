@@ -14,28 +14,48 @@ package org.sonatype.security.realms.ldap.internal.persist;
 
 import java.util.List;
 
-import com.sonatype.security.ldap.realms.persist.model.CLdapServerConfiguration;
+import org.sonatype.security.realms.ldap.internal.persist.entity.LdapConfiguration;
 
-import org.sonatype.configuration.validation.InvalidConfigurationException;
-
+/**
+ * Component responsible for handling caching, eventing and driving persistence using {@link LdapConfigurationSource}.
+ */
 public interface LdapConfigurationManager
 {
-
+  /**
+   * Clears in-memory cache of LDAP server configuration.
+   */
   void clearCache();
 
-  List<CLdapServerConfiguration> listLdapServerConfigurations();
+  /**
+   * Lists defined LDAP server configurations.
+   */
+  List<LdapConfiguration> listLdapServerConfigurations();
 
-  CLdapServerConfiguration getLdapServerConfiguration(String id)
-      throws InvalidConfigurationException, LdapServerNotFoundException;
+  /**
+   * Returns LDAP server configuration by it's ID, never {@code null}. If not found, exception will be thrown.
+   */
+  LdapConfiguration getLdapServerConfiguration(String id) throws LdapServerNotFoundException;
 
-  void updateLdapServerConfiguration(CLdapServerConfiguration ldapServerConfiguration)
-      throws InvalidConfigurationException, LdapServerNotFoundException;
+  /**
+   * Creates LDAP server configuration. If {@code mayActivate} is {@code true}, then realm might get activated,
+   * if the added server is very first in the configuration.
+   */
+  void addLdapServerConfiguration(LdapConfiguration ldapServerConfiguration, boolean mayActivate)
+      throws IllegalArgumentException;
 
-  void addLdapServerConfiguration(CLdapServerConfiguration ldapServerConfiguration)
-      throws InvalidConfigurationException;
+  /**
+   * Updates LDAP server configuration. If not found, exception will be thrown.
+   */
+  void updateLdapServerConfiguration(LdapConfiguration ldapServerConfiguration)
+      throws IllegalArgumentException, LdapServerNotFoundException;
 
-  void deleteLdapServerConfiguration(String id) throws InvalidConfigurationException, LdapServerNotFoundException;
+  /**
+   * Deletes the LDAP server configuration. If not found, exception will be thrown.
+   */
+  void deleteLdapServerConfiguration(String id) throws LdapServerNotFoundException;
 
-  void setServerOrder(List<String> orderdServerIds) throws InvalidConfigurationException;
-
+  /**
+   * Sets LDAP server order. The parameter is ordered list of IDs of existing LDAP server configurations.
+   */
+  void setServerOrder(List<String> orderdServerIds) throws IllegalArgumentException;
 }
