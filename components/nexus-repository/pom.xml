@@ -64,6 +64,14 @@
       <artifactId>goodies-lifecycle</artifactId>
     </dependency>
 
+    <!--
+    HACK: ATM the basic impls of orient support (for testing) still exist in nexus-core.
+    -->
+    <dependency>
+      <groupId>org.sonatype.nexus</groupId>
+      <artifactId>nexus-core</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>org.sonatype.sisu.goodies</groupId>
       <artifactId>goodies-testsupport</artifactId>
