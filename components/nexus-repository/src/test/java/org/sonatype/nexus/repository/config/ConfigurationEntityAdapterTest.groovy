@@ -106,6 +106,7 @@ class ConfigurationEntityAdapterTest
       attr1.set('a', 'b')
 
       def doc = underTest.add(db, config1)
+      log doc.toJSON()
 
       def config2 = underTest.read(doc)
       assert config2.recipeName == 'foo'
