@@ -82,12 +82,40 @@ class ConfigurationEntityAdapterTest
       def config = new Configuration()
       config.recipeName = 'foo'
       config.repositoryName = 'bar'
-
       def attr = config.attributes('baz')
       attr.set('a', 'b')
 
       def doc = underTest.add(db, config)
       log doc.toJSON()
+    }
+    finally {
+      db.close()
+    }
+  }
+
+  @Test
+  void 'read entity'() {
+    def db = databaseInstance.connect()
+    try {
+      underTest.register(db)
+
+      def config1 = new Configuration()
+      config1.recipeName = 'foo'
+      config1.repositoryName = 'bar'
+      def attr1 = config1.attributes('baz')
+      attr1.set('a', 'b')
+
+      def doc = underTest.add(db, config1)
+
+      def config2 = underTest.read(doc)
+      assert config2.recipeName == 'foo'
+      assert config2.repositoryName == 'bar'
+      assert config2.attributes != null
+      assert config2.attributes.size() == 1
+
+      def attr2 = config2.attributes('baz')
+      assert attr2 != null
+      assert attr2.get('a') == 'b'
     }
     finally {
       db.close()
