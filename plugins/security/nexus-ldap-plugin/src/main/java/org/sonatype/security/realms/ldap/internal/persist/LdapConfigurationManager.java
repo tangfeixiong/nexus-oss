@@ -40,7 +40,7 @@ public interface LdapConfigurationManager
    * Creates LDAP server configuration. If {@code mayActivate} is {@code true}, then realm might get activated,
    * if the added server is very first in the configuration.
    */
-  void addLdapServerConfiguration(LdapConfiguration ldapServerConfiguration, boolean mayActivate)
+  void addLdapServerConfiguration(LdapConfiguration ldapServerConfiguration)
       throws IllegalArgumentException;
 
   /**

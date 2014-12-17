@@ -12,13 +12,12 @@
  */
 package org.sonatype.security.realms.ldap.internal.restlet;
 
+import org.sonatype.plexus.rest.resource.PlexusResource;
 import org.sonatype.security.realms.ldap.api.dto.LdapServerConfigurationDTO;
 import org.sonatype.security.realms.ldap.api.dto.LdapServerRequest;
 import org.sonatype.security.realms.ldap.internal.persist.LdapConfigurationManager;
 import org.sonatype.security.realms.ldap.internal.persist.LdapServerNotFoundException;
-import com.sonatype.security.ldap.realms.persist.model.CLdapServerConfiguration;
-
-import org.sonatype.plexus.rest.resource.PlexusResource;
+import org.sonatype.security.realms.ldap.internal.persist.entity.LdapConfiguration;
 
 import com.thoughtworks.xstream.XStream;
 import org.junit.Assert;
@@ -45,16 +44,16 @@ public class ServerRestTest
     LdapConfigurationManager ldapConfigurationManager = this.lookup(LdapConfigurationManager.class);
 
     // add 2 ldapServers
-    CLdapServerConfiguration ldapServer1 = new CLdapServerConfiguration();
+    LdapConfiguration ldapServer1 = new LdapConfiguration();
     ldapServer1.setName("testGet1");
-    ldapServer1.setConnectionInfo(this.buildConnectionInfo());
-    ldapServer1.setUserAndGroupConfig(this.buildUserAndGroupAuthConfiguration());
+    ldapServer1.setConnection(this.buildConnectionInfo());
+    ldapServer1.setMapping(this.buildUserAndGroupAuthConfiguration());
     ldapConfigurationManager.addLdapServerConfiguration(ldapServer1);
 
-    CLdapServerConfiguration ldapServer2 = new CLdapServerConfiguration();
+    LdapConfiguration ldapServer2 = new LdapConfiguration();
     ldapServer2.setName("testGet2");
-    ldapServer2.setConnectionInfo(this.buildConnectionInfo());
-    ldapServer2.setUserAndGroupConfig(this.buildUserAndGroupAuthConfiguration());
+    ldapServer2.setConnection(this.buildConnectionInfo());
+    ldapServer2.setMapping(this.buildUserAndGroupAuthConfiguration());
     ldapConfigurationManager.addLdapServerConfiguration(ldapServer2);
 
     // now get the second one
@@ -74,10 +73,10 @@ public class ServerRestTest
   {
     LdapConfigurationManager ldapConfigurationManager = this.lookup(LdapConfigurationManager.class);
 
-    CLdapServerConfiguration ldapServer1 = new CLdapServerConfiguration();
+    LdapConfiguration ldapServer1 = new LdapConfiguration();
     ldapServer1.setName("testPut");
-    ldapServer1.setConnectionInfo(this.buildConnectionInfo());
-    ldapServer1.setUserAndGroupConfig(this.buildUserAndGroupAuthConfiguration());
+    ldapServer1.setConnection(this.buildConnectionInfo());
+    ldapServer1.setMapping(this.buildUserAndGroupAuthConfiguration());
     ldapConfigurationManager.addLdapServerConfiguration(ldapServer1);
 
     LdapServerRequest ldapRequest = new LdapServerRequest();
@@ -111,16 +110,16 @@ public class ServerRestTest
     LdapConfigurationManager ldapConfigurationManager = this.lookup(LdapConfigurationManager.class);
 
     // add 2 ldapServers
-    CLdapServerConfiguration ldapServer1 = new CLdapServerConfiguration();
+    LdapConfiguration ldapServer1 = new LdapConfiguration();
     ldapServer1.setName("testDelete1");
-    ldapServer1.setConnectionInfo(this.buildConnectionInfo());
-    ldapServer1.setUserAndGroupConfig(this.buildUserAndGroupAuthConfiguration());
+    ldapServer1.setConnection(this.buildConnectionInfo());
+    ldapServer1.setMapping(this.buildUserAndGroupAuthConfiguration());
     ldapConfigurationManager.addLdapServerConfiguration(ldapServer1);
 
-    CLdapServerConfiguration ldapServer2 = new CLdapServerConfiguration();
+    LdapConfiguration ldapServer2 = new LdapConfiguration();
     ldapServer2.setName("testDelete2");
-    ldapServer2.setConnectionInfo(this.buildConnectionInfo());
-    ldapServer2.setUserAndGroupConfig(this.buildUserAndGroupAuthConfiguration());
+    ldapServer2.setConnection(this.buildConnectionInfo());
+    ldapServer2.setMapping(this.buildUserAndGroupAuthConfiguration());
     ldapConfigurationManager.addLdapServerConfiguration(ldapServer2);
 
     PlexusResource pr = this.lookup(PlexusResource.class, "LdapServerPlexusResource");

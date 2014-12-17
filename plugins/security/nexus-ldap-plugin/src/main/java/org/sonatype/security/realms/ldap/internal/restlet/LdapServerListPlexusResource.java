@@ -117,7 +117,7 @@ public class LdapServerListPlexusResource
     }
 
     LdapConfiguration ldapServer = this.toLdapModel(ldapServerRequest.getData());
-    this.ldapConfigurationManager.addLdapServerConfiguration(ldapServer, true);
+    this.ldapConfigurationManager.addLdapServerConfiguration(ldapServer);
 
     try {
       LdapServerRequest ldapServerResponse = new LdapServerRequest();

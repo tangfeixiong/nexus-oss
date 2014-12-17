@@ -124,8 +124,7 @@ public class DefaultLdapConfigurationManager
   }
 
   @Override
-  public synchronized void addLdapServerConfiguration(final LdapConfiguration ldapServerConfiguration,
-                                                      final boolean mayActivate)
+  public synchronized void addLdapServerConfiguration(final LdapConfiguration ldapServerConfiguration)
       throws IllegalArgumentException
   {
     checkNotNull(ldapServerConfiguration);
@@ -138,7 +137,7 @@ public class DefaultLdapConfigurationManager
     ldapServerConfiguration.setId(id);
     configurationSource.create(ldapServerConfiguration);
     clearCache();
-    if (mayActivate && firstEntry) {
+    if (firstEntry) {
       mayActivateLdapRealm();
     }
   }

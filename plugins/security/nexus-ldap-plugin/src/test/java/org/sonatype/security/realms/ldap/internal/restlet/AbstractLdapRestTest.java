@@ -16,13 +16,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sonatype.security.realms.ldap.internal.realms.AbstractMockLdapConnectorTest;
 import org.sonatype.security.realms.ldap.api.dto.LdapConnectionInfoDTO;
 import org.sonatype.security.realms.ldap.api.dto.LdapServerConfigurationDTO;
 import org.sonatype.security.realms.ldap.api.dto.LdapUserAndGroupAuthConfigurationDTO;
-import com.sonatype.security.ldap.realms.persist.model.CLdapServerConfiguration;
-
 import org.sonatype.security.realms.ldap.internal.connector.LdapConnector;
+import org.sonatype.security.realms.ldap.internal.persist.entity.LdapConfiguration;
+import org.sonatype.security.realms.ldap.internal.realms.AbstractMockLdapConnectorTest;
 
 import com.thoughtworks.xstream.XStream;
 import org.junit.Assert;
@@ -102,7 +101,7 @@ public abstract class AbstractLdapRestTest
     Assert.assertEquals(expectedString, actualString);
   }
 
-  protected void compare(LdapServerConfigurationDTO dto, CLdapServerConfiguration ldapServer) {
+  protected void compare(LdapServerConfigurationDTO dto, LdapConfiguration ldapServer) {
     LdapRestTestUtils.compare(dto, ldapServer);
   }
 

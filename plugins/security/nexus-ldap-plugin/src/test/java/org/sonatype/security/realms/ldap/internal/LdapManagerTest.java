@@ -17,14 +17,13 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.sonatype.security.realms.ldap.internal.persist.LdapConfigurationManager;
-import com.sonatype.security.ldap.realms.persist.model.CLdapServerConfiguration;
-
 import org.sonatype.security.authentication.AuthenticationException;
 import org.sonatype.security.realms.ldap.internal.connector.dao.LdapUser;
 import org.sonatype.security.realms.ldap.internal.connector.dao.NoLdapUserRolesFoundException;
 import org.sonatype.security.realms.ldap.internal.connector.dao.NoSuchLdapGroupException;
 import org.sonatype.security.realms.ldap.internal.connector.dao.NoSuchLdapUserException;
+import org.sonatype.security.realms.ldap.internal.persist.LdapConfigurationManager;
+import org.sonatype.security.realms.ldap.internal.persist.entity.LdapConfiguration;
 import org.sonatype.security.realms.ldap.internal.realms.EnterpriseLdapManager;
 import org.sonatype.security.realms.ldap.internal.realms.LdapManager;
 
@@ -70,7 +69,7 @@ public class LdapManagerTest
     EnterpriseLdapManager ldapManager = (EnterpriseLdapManager) this.lookup(LdapManager.class);
     LdapConfigurationManager ldapConfiguration = this.lookup(LdapConfigurationManager.class);
 
-    CLdapServerConfiguration ldapServer = ldapConfiguration.getLdapServerConfiguration("default");
+    LdapConfiguration ldapServer = ldapConfiguration.getLdapServerConfiguration("default");
     ldapServer = this.clone(ldapServer);
 
     Assert.assertNotNull(ldapManager.authenticateUserTest("brianf", "brianf123", ldapServer));
@@ -91,9 +90,9 @@ public class LdapManagerTest
     EnterpriseLdapManager ldapManager = (EnterpriseLdapManager) this.lookup(LdapManager.class);
     LdapConfigurationManager ldapConfiguration = this.lookup(LdapConfigurationManager.class);
 
-    CLdapServerConfiguration ldapServer = ldapConfiguration.getLdapServerConfiguration("default");
+    LdapConfiguration ldapServer = ldapConfiguration.getLdapServerConfiguration("default");
     ldapServer = this.clone(ldapServer);
-    ldapServer.getConnectionInfo().setHost("INVALIDSERVERNAME");
+    ldapServer.getConnection().getHost().setHostName("INVALIDSERVERNAME");
 
     try {
       ldapManager.authenticateUserTest("brianf", "brianf123", ldapServer);
@@ -325,8 +324,8 @@ public class LdapManagerTest
     Assert.assertEquals(0, ldapManager.searchUsers("z", null).size());
   }
 
-  private CLdapServerConfiguration clone(CLdapServerConfiguration ldapServer) {
+  private LdapConfiguration clone(LdapConfiguration ldapServer) {
     XStream xstream = new XStream();
-    return (CLdapServerConfiguration) xstream.fromXML(xstream.toXML(ldapServer));
+    return (LdapConfiguration) xstream.fromXML(xstream.toXML(ldapServer));
   }
 }

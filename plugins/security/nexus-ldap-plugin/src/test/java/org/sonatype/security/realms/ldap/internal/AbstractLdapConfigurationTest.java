@@ -12,27 +12,17 @@
  */
 package org.sonatype.security.realms.ldap.internal;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 
-import org.sonatype.security.realms.ldap.internal.persist.PasswordHelper;
-import com.sonatype.security.ldap.realms.persist.model.CConnectionInfo;
-import com.sonatype.security.ldap.realms.persist.model.CLdapConfiguration;
-import com.sonatype.security.ldap.realms.persist.model.CLdapServerConfiguration;
-import com.sonatype.security.ldap.realms.persist.model.CUserAndGroupAuthConfiguration;
-import com.sonatype.security.ldap.realms.persist.model.io.xpp3.LdapConfigurationXpp3Reader;
-import com.sonatype.security.ldap.realms.persist.model.io.xpp3.LdapConfigurationXpp3Writer;
-
 import org.sonatype.security.configuration.model.SecurityConfiguration;
-import org.sonatype.security.realms.ldap.internal.SecurityTestSupportSecurity;
+import org.sonatype.security.realms.ldap.internal.persist.PasswordHelper;
+import org.sonatype.security.realms.ldap.internal.persist.entity.Connection;
+import org.sonatype.security.realms.ldap.internal.persist.entity.Connection.Host;
+import org.sonatype.security.realms.ldap.internal.persist.entity.Connection.Protocol;
+import org.sonatype.security.realms.ldap.internal.persist.entity.LdapConfiguration;
+import org.sonatype.security.realms.ldap.internal.persist.entity.Mapping;
 
 import com.thoughtworks.xstream.XStream;
-import org.codehaus.plexus.util.StringUtils;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.junit.Assert;
 
 public abstract class AbstractLdapConfigurationTest
@@ -53,8 +43,8 @@ public abstract class AbstractLdapConfigurationTest
     return SecurityTestSupportSecurity.securityWithLdapRealm();
   }
 
-  protected CUserAndGroupAuthConfiguration buildUserAndGroupAuthConfiguration() {
-    CUserAndGroupAuthConfiguration userGroupConf = new CUserAndGroupAuthConfiguration();
+  protected Mapping buildUserAndGroupAuthConfiguration() {
+    Mapping userGroupConf = new Mapping();
 
     userGroupConf.setUserMemberOfAttribute("userMemberOfAttribute");
     userGroupConf.setGroupBaseDn("groupBaseDn");
@@ -75,19 +65,15 @@ public abstract class AbstractLdapConfigurationTest
     return userGroupConf;
   }
 
-  protected CConnectionInfo buildConnectionInfo() throws UnsupportedEncodingException {
-    CConnectionInfo connInfo = new CConnectionInfo();
+  protected Connection buildConnectionInfo() throws UnsupportedEncodingException {
+    Connection connInfo = new Connection();
 
     connInfo.setAuthScheme("ldap");
-    connInfo.setBackupMirrorHost("backupHost");
-    connInfo.setBackupMirrorPort(11111);
-    connInfo.setBackupMirrorProtocol("ldap");
+    connInfo.setBackupHost(new Host(Protocol.ldap, "backupHost", 11111));
     connInfo.setCacheTimeout(30);
     connInfo.setConnectionRetryDelay(300);
     connInfo.setConnectionTimeout(15);
-    connInfo.setHost("localhost");
-    connInfo.setPort(386);
-    connInfo.setProtocol("ldap");
+    connInfo.setHost(new Host(Protocol.ldap, "localhost", 386));
     connInfo.setRealm("");
     connInfo.setSearchBase("ou=searchbase");
     connInfo.setSystemPassword(encodeBase64("systemPassword"));
@@ -100,10 +86,10 @@ public abstract class AbstractLdapConfigurationTest
       throws Exception
   {
     Assert.assertEquals(expectedConfigurationAsString.replace("\r", ""),
-        this.clearPasswords(actualConfigurationAsString).replace("\r", ""));
+        actualConfigurationAsString.replace("\r", ""));
   }
 
-  protected void compareConfiguration(CLdapServerConfiguration expected, CLdapServerConfiguration actual)
+  protected void compareConfiguration(LdapConfiguration expected, LdapConfiguration actual)
       throws Exception
   {
     XStream xstream = new XStream();
@@ -111,65 +97,5 @@ public abstract class AbstractLdapConfigurationTest
     String newConfig = xstream.toXML(actual);
 
     Assert.assertEquals(originalConfig, newConfig);
-
-    // now check against the file
-    String fileConfig = xstream.toXML(this.getLdapServerConfigFromFile(expected.getId(), true));
-    Assert.assertEquals(originalConfig, fileConfig);
   }
-
-  protected CLdapServerConfiguration getLdapServerConfigFromFile(String id, boolean convertPasswordsToClearText)
-      throws Exception
-  {
-    CLdapConfiguration config = this.getConfigFromFile();
-
-    for (CLdapServerConfiguration ldapServer : config.getServers()) {
-      if (ldapServer.getId().equals(id)) {
-        if (convertPasswordsToClearText) {
-          this.convertPasswordsToClearText(ldapServer);
-        }
-        return ldapServer;
-      }
-    }
-
-    return null;
-  }
-
-  protected CLdapConfiguration getConfigFromFile()
-      throws IOException, XmlPullParserException
-  {
-    try (FileReader fr = new FileReader(new File(getConfHomeDir(), "ldap.xml"))) {
-      LdapConfigurationXpp3Reader reader = new LdapConfigurationXpp3Reader();
-      return reader.read(fr);
-    }
-  }
-
-  private String clearPasswords(String ldapConfigAsString)
-      throws Exception
-  {
-    LdapConfigurationXpp3Reader reader = new LdapConfigurationXpp3Reader();
-    CLdapConfiguration ldapConfiguration = reader.read(new StringReader(ldapConfigAsString));
-    // loop through and set the passwords to clear text
-    for (CLdapServerConfiguration ldapServer : ldapConfiguration.getServers()) {
-      this.convertPasswordsToClearText(ldapServer);
-    }
-
-    LdapConfigurationXpp3Writer writer = new LdapConfigurationXpp3Writer();
-    StringWriter stringWriter = new StringWriter();
-    writer.write(stringWriter, ldapConfiguration);
-
-    return stringWriter.toString();
-  }
-
-  private void convertPasswordsToClearText(CLdapServerConfiguration ldapServer)
-      throws Exception
-  {
-    if (ldapServer.getConnectionInfo() != null
-        && StringUtils.isNotEmpty(ldapServer.getConnectionInfo().getSystemPassword())) {
-      // the password must be encrypted
-      Assert.assertTrue(this.passwordHelper.isEncoded(ldapServer.getConnectionInfo().getSystemPassword()));
-      ldapServer.getConnectionInfo().setSystemPassword(
-          this.passwordHelper.decrypt(ldapServer.getConnectionInfo().getSystemPassword()));
-    }
-  }
-
 }
