@@ -72,4 +72,25 @@ class ConfigurationEntityAdapterTest
       db.close()
     }
   }
+
+  @Test
+  void 'add entity'() {
+    def db = databaseInstance.connect()
+    try {
+      underTest.register(db)
+
+      def config = new Configuration()
+      config.recipeName = 'foo'
+      config.repositoryName = 'bar'
+
+      def attr = config.attributes('baz')
+      attr.set('a', 'b')
+
+      def doc = underTest.add(db, config)
+      log doc.toJSON()
+    }
+    finally {
+      db.close()
+    }
+  }
 }
