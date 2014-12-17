@@ -74,7 +74,7 @@ class ConfigurationEntityAdapterTest
   }
 
   @Test
-  void 'add entity'() {
+  void 'add simple entity'() {
     def db = databaseInstance.connect()
     try {
       underTest.register(db)
@@ -94,7 +94,7 @@ class ConfigurationEntityAdapterTest
   }
 
   @Test
-  void 'read entity'() {
+  void 'read simple entity'() {
     def db = databaseInstance.connect()
     try {
       underTest.register(db)
