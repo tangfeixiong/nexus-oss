@@ -30,7 +30,7 @@ Ext.define('NX.view.footer.Panel', {
   items: [
     {
       xtype: 'container',
-      html: 'Sonatype Nexus&trade; &copy; Copyright Sonatype, Inc.',
+      html: NX.app.PluginStrings.GLOBAL_FOOTER_COPYRIGHT,
       style: {
         'background-color': '#444444',
         'color': '#C6C6C6',
