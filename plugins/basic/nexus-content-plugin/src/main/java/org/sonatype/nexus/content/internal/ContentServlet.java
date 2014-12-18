@@ -380,7 +380,7 @@ public class ContentServlet
         if (!item.isVirtual()) {
           if (!item.getRepositoryItemUid().getBooleanAttributeValue(IsRemotelyAccessibleAttribute.class)) {
             logger.debug("Request for remotely non-accessible UID {} is forbidden", item.getRepositoryItemUid());
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            response.sendError(SC_NOT_FOUND);
             return;
           }
         }
