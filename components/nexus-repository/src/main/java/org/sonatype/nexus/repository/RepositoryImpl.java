@@ -21,11 +21,11 @@ import com.google.common.collect.Maps;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Support for building custom {@link Repository repositories}.
+ * {@link Repository} implementation.
  *
  * @since 3.0
  */
-public class RepositorySupport
+public class RepositoryImpl
     implements Repository
 {
   private final Type type;
@@ -38,7 +38,7 @@ public class RepositorySupport
 
   private final Map<Class, Facet> facets = Maps.newHashMap();
 
-  public RepositorySupport(final Type type, final Format format) {
+  public RepositoryImpl(final Type type, final Format format) {
     this.type = checkNotNull(type);
     this.format = checkNotNull(format);
   }

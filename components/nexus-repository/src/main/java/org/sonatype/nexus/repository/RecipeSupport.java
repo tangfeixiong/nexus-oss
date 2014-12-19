@@ -61,7 +61,7 @@ public abstract class RecipeSupport
   public Repository create(final Configuration config) throws Exception {
     checkNotNull(config);
 
-    Repository repo = new RepositorySupport(type, format);
+    Repository repo = new RepositoryImpl(type, format);
     repo.init(config);
 
     for (Provider<? extends Facet> facetPrototype : facetPrototypes) {
