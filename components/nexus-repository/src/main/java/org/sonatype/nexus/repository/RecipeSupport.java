@@ -10,6 +10,7 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
+
 package org.sonatype.nexus.repository;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 import javax.inject.Provider;
 
 import org.sonatype.nexus.repository.config.Configuration;
+import org.sonatype.sisu.goodies.common.ComponentSupport;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Injector;
@@ -29,6 +31,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 3.0
  */
 public abstract class RecipeSupport
+    extends ComponentSupport
     implements Recipe
 {
   private final Format format;
@@ -55,7 +58,9 @@ public abstract class RecipeSupport
   }
 
   @Override
-  public Repository create(Configuration config) throws Exception {
+  public Repository create(final Configuration config) throws Exception {
+    checkNotNull(config);
+
     Repository repo = new RepositorySupport(type, format);
     repo.init(config);
 
