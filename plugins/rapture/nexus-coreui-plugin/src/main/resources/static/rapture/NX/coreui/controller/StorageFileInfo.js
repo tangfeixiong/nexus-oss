@@ -59,12 +59,10 @@ Ext.define('NX.coreui.controller.StorageFileInfo', {
           repositories = [];
 
       if (Ext.isObject(response) && response.success && response.data) {
-        info = {
-          'Path': NX.util.Url.asLink(
+        info[NX.I18n.get('BROWSE_SEARCH_INFO_PATH')] = NX.util.Url.asLink(
               NX.util.Url.urlOf('content/repositories/' + repositoryId + response.data['path']),
               response.data['path'] + (response.data['inLocalStorage'] ? '' : ' (Not Locally Cached)')
-          )
-        };
+        );
         if (response.data['inLocalStorage']) {
           Ext.Array.each(response.data['repositories'], function(repository) {
             repositories.push(NX.util.Url.asLink(
