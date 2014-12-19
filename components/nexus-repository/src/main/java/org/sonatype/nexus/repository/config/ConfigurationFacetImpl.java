@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.sonatype.nexus.repository.FacetSupport;
+import org.sonatype.nexus.repository.Repository;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -31,15 +32,22 @@ public class ConfigurationFacetImpl
 {
   private final ConfigurationStore store;
 
+  private Configuration configuration;
+
   @Inject
   public ConfigurationFacetImpl(final ConfigurationStore store) {
     this.store = checkNotNull(store);
   }
 
   @Override
+  protected void doInit(final Repository repository) throws Exception {
+    configuration = repository.getConfiguration();
+    assert configuration != null;
+  }
+
+  @Override
   public Configuration get() {
-    // TODO
-    return null;
+    return configuration;
   }
 
   @Override
