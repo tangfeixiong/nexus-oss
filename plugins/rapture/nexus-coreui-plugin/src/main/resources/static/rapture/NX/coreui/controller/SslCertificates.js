@@ -63,7 +63,7 @@ Ext.define('NX.coreui.controller.SslCertificates', {
     mode: 'admin',
     path: '/Security/SSL Certificates',
     view: { xtype: 'nx-coreui-sslcertificate-feature' },
-    description: 'Manage trusted SSL certificates for use with the Nexus Trust Store',
+    description: NX.I18n.get('ADMIN_SSL_SUBTITLE'),
     iconConfig: {
       file: 'ssl_certificates.png',
       variants: ['x16', 'x32']

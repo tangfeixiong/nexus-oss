@@ -68,7 +68,7 @@ Ext.define('NX.coreui.view.repositorybrowse.BrowseRepositoryTree', {
   ],
 
   tbar: [
-    { xtype: 'button', text: 'More...', glyph: 'xf0ae@FontAwesome' /* fa-tasks */, action: 'more', disabled: true,
+    { xtype: 'button', text: NX.I18n.get('BROWSE_REPOSITORY_MORE_BUTTON'), glyph: 'xf0ae@FontAwesome' /* fa-tasks */, action: 'more', disabled: true,
       menu: []
     }
   ],

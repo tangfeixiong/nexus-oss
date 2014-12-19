@@ -42,7 +42,7 @@ Ext.define('NX.coreui.controller.PluginConsole', {
   features: {
     mode: 'admin',
     path: '/System/Plugins',
-    description: 'View installed plugins',
+    description: NX.I18n.get('ADMIN_PLUGINS_SUBTITLE'),
     view: 'NX.coreui.view.system.Plugins',
     iconConfig: {
       file: 'plugin.png',

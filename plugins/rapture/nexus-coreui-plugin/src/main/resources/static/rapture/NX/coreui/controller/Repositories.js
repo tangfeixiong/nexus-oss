@@ -73,7 +73,8 @@ Ext.define('NX.coreui.controller.Repositories', {
   features: {
     mode: 'admin',
     path: '/Repository/Repositories',
-    description: 'Manage repositories',
+    text: NX.I18n.get('ADMIN_REPOSITORIES_TITLE'),
+    description: NX.I18n.get('ADMIN_REPOSITORIES_SUBTITLE'),
     view: { xtype: 'nx-coreui-repository-feature' },
     iconConfig: {
       file: 'database.png',

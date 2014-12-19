@@ -51,7 +51,7 @@ Ext.define('NX.coreui.controller.Metrics', {
       mode: 'admin',
       path: '/Support/Metrics',
       view: { xtype: 'nx-coreui-support-metrics' },
-      description: 'Provides server metrics',
+      description: NX.I18n.get('ADMIN_METRICS_SUBTITLE'),
       iconConfig: {
         file: 'chart_pie.png',
         variants: ['x16', 'x32']

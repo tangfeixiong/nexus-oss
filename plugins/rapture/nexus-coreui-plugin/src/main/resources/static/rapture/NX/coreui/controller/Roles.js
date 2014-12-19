@@ -63,7 +63,7 @@ Ext.define('NX.coreui.controller.Roles', {
   features: {
     mode: 'admin',
     path: '/Security/Roles',
-    description: 'Manage roles',
+    description: NX.I18n.get('ADMIN_ROLES_SUBTITLE'),
     view: { xtype: 'nx-coreui-role-feature' },
     iconConfig: {
       file: 'user_policeman.png',

@@ -79,7 +79,7 @@ Ext.define('NX.coreui.controller.Users', {
     {
       mode: 'admin',
       path: '/Security/Users',
-      description: 'Manage users',
+      description: NX.I18n.get('ADMIN_USERS_SUBTITLE'),
       view: { xtype: 'nx-coreui-user-feature' },
       iconConfig: {
         file: 'group.png',
@@ -93,7 +93,7 @@ Ext.define('NX.coreui.controller.Users', {
     {
       mode: 'user',
       path: '/Account',
-      description: 'Manage your account',
+      description: NX.I18n.get('USER_ACCOUNT_SUBTITLE'),
       view: { xtype: 'nx-coreui-user-account' },
       iconConfig: {
         file: 'user.png',

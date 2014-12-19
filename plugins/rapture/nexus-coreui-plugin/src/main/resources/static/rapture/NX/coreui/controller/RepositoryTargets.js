@@ -55,7 +55,7 @@ Ext.define('NX.coreui.controller.RepositoryTargets', {
   features: {
     mode: 'admin',
     path: '/Repository/Targets',
-    description: 'Manage repository targets',
+    description: NX.I18n.get('ADMIN_TARGETS_SUBTITLE'),
     view: { xtype: 'nx-coreui-repositorytarget-feature' },
     iconConfig: {
       file: 'target.png',

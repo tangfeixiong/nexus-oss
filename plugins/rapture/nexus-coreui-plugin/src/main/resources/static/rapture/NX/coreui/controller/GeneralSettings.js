@@ -36,7 +36,7 @@ Ext.define('NX.coreui.controller.GeneralSettings', {
     me.getApplication().getFeaturesController().registerFeature({
       mode: 'admin',
       path: '/System/General',
-      description: 'Manage general configuration',
+      description: NX.I18n.get('ADMIN_GENERAL_SUBTITLE'),
       view: { xtype: 'nx-coreui-system-general-settings' },
       iconConfig: {
         file: 'wrench.png',

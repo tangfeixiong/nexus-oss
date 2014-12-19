@@ -102,6 +102,7 @@ Ext.define('NX.coreui.controller.Search', {
         me.getApplication().getFeaturesController().registerFeature({
           mode: 'browse',
           path: '/Search',
+          text: NX.I18n.get('BROWSE_SEARCH_TITLE'),
           description: NX.I18n.get('BROWSE_SEARCH_SUBTITLE'),
           group: true,
           view: { xtype: 'nx-searchfeature', searchFilter: model, bookmarkEnding: '' },
@@ -119,6 +120,7 @@ Ext.define('NX.coreui.controller.Search', {
           path: '/Search/' + (model.get('readOnly') ? '' : 'Saved/') + model.get('name'),
           view: { xtype: 'nx-searchfeature', searchFilter: model, bookmarkEnding: '/' + model.getId() },
           iconName: 'search-default',
+          text: model.get('text'),
           description: model.get('description'),
           authenticationRequired: false,
           visible: function() {
@@ -257,7 +259,7 @@ Ext.define('NX.coreui.controller.Search', {
     searchCriteriaPanel.add({
       xtype: 'button',
       itemId: 'addButton',
-      text: 'More Criteria',
+      text: NX.I18n.get('BROWSE_SEARCH_COMPONENTS_MORE_BUTTON'),
       glyph: 'xf055@FontAwesome' /* fa-plus-circle */,
       menu: addCriteriaMenu
     });

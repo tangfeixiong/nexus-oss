@@ -62,7 +62,7 @@ Ext.define('NX.coreui.controller.Privileges', {
   features: {
     mode: 'admin',
     path: '/Security/Privileges',
-    description: 'Manage privileges',
+    description: NX.I18n.get('ADMIN_PRIVILEGES_SUBTITLE'),
     view: { xtype: 'nx-coreui-privilege-feature' },
     iconConfig: {
       file: 'medal_gold_1.png',
