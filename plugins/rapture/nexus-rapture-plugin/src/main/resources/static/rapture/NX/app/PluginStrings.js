@@ -19,48 +19,49 @@
  */
 Ext.define('NX.app.PluginStrings', {
   singleton: true,
+  requires: [
+    'NX.I18n'
+  ],
 
-  /*
-   * Global strings
-   */
+  keys: {
+    // Header
+    GLOBAL_HEADER_TITLE: 'Sonatype Nexus>',
+    GLOBAL_HEADER_BROWSE_TOOLTIP: 'Browse Server Contents>',
+    GLOBAL_HEADER_ADMIN_TOOLTIP: 'Server administration and configuration>',
+    GLOBAL_HEADER_SEARCH_PLACEHOLDER: 'Search…>',
+    GLOBAL_HEADER_REFRESH_TOOLTIP: 'Refresh current view and data>',
+    GLOBAL_HEADER_USER_TOOLTIP: 'User profile and options>',
+    GLOBAL_HEADER_SIGN_IN: 'Sign In>',
+    GLOBAL_HEADER_SIGN_IN_TOOLTIP: 'Have an account?>',
+    GLOBAL_HEADER_SIGN_OUT_TOOLTIP: 'Sign out>',
+    GLOBAL_HEADER_HELP_TOOLTIP: 'Help>',
+    GLOBAL_HEADER_HELP_FEATURE: 'Help for:>',
+    GLOBAL_HEADER_HELP_ABOUT: 'About>',
+    GLOBAL_HEADER_HELP_DOCUMENTATION: 'Documentation>',
+    GLOBAL_HEADER_HELP_KB: 'Knowledge Base>',
+    GLOBAL_HEADER_HELP_COMMUNITY: 'Community>',
+    GLOBAL_HEADER_HELP_ISSUES: 'Issue Tracker>',
+    GLOBAL_HEADER_HELP_SUPPORT: 'Support>',
 
-  // Header
-  GLOBAL_HEADER_TITLE: 'Sonatype Nexus>',
-  GLOBAL_HEADER_BROWSE_TOOLTIP: 'Browse Server Contents>',
-  GLOBAL_HEADER_ADMIN_TOOLTIP: 'Server administration and configuration>',
-  GLOBAL_HEADER_SEARCH_PLACEHOLDER: 'Search…>',
-  GLOBAL_HEADER_REFRESH_TOOLTIP: 'Refresh current view and data>',
-  GLOBAL_HEADER_USER_TOOLTIP: 'User profile and options>',
-  GLOBAL_HEADER_SIGN_IN: 'Sign In>',
-  GLOBAL_HEADER_SIGN_IN_TOOLTIP: 'Have an account?>',
-  GLOBAL_HEADER_SIGN_OUT_TOOLTIP: 'Sign out>',
-  GLOBAL_HEADER_HELP_TOOLTIP: 'Help>',
-  GLOBAL_HEADER_HELP_FEATURE: 'Help for:>',
-  GLOBAL_HEADER_HELP_ABOUT: 'About>',
-  GLOBAL_HEADER_HELP_DOCUMENTATION: 'Documentation>',
-  GLOBAL_HEADER_HELP_KB: 'Knowledge Base>',
-  GLOBAL_HEADER_HELP_COMMUNITY: 'Community>',
-  GLOBAL_HEADER_HELP_ISSUES: 'Issue Tracker>',
-  GLOBAL_HEADER_HELP_SUPPORT: 'Support>',
+    // Footer
+    GLOBAL_FOOTER_COPYRIGHT: 'Sonatype Nexus™ © Copyright Sonatype, Inc.>',
 
-  // Footer
-  GLOBAL_FOOTER_COPYRIGHT: 'Sonatype Nexus™ © Copyright Sonatype, Inc.>',
+    // Sign in
+    GLOBAL_SIGN_IN_TITLE: 'Sign In>',
+    GLOBAL_SIGN_IN_USERNAME: 'Username>',
+    GLOBAL_SIGN_IN_USERNAME_PLACEHOLDER: 'enter your username>',
+    GLOBAL_SIGN_IN_PASSWORD: 'Password>',
+    GLOBAL_SIGN_IN_PASSWORD_PLACEHOLDER: 'enter your password>',
+    GLOBAL_SIGN_IN_REMEMBER_ME: 'Remember me>',
+    GLOBAL_SIGN_IN_SUBMIT: 'Sign In>',
+    GLOBAL_SIGN_IN_CANCEL: 'Cancel>',
 
-  // Sign in
-  GLOBAL_SIGN_IN_TITLE: 'Sign In>',
-  GLOBAL_SIGN_IN_USERNAME: 'Username>',
-  GLOBAL_SIGN_IN_USERNAME_PLACEHOLDER: 'enter your username>',
-  GLOBAL_SIGN_IN_PASSWORD: 'Password>',
-  GLOBAL_SIGN_IN_PASSWORD_PLACEHOLDER: 'enter your password>',
-  GLOBAL_SIGN_IN_REMEMBER_ME: 'Remember me>',
-  GLOBAL_SIGN_IN_SUBMIT: 'Sign In>',
-  GLOBAL_SIGN_IN_CANCEL: 'Cancel>',
+    // Welcome
+    //BROWSE_WELCOME_TITLE: 'Welcome',
+    BROWSE_WELCOME_SUBTITLE: 'Welcome to Sonatype Nexus!>'
+  }
 
-  /*
-   * Features
-   */
-
-  // Welcome
-  //BROWSE_WELCOME_TITLE: 'Welcome',
-  BROWSE_WELCOME_SUBTITLE: 'Welcome to Sonatype Nexus!>'
+}, function(obj) {
+  NX.I18n.register(obj.keys);
 });
+

@@ -10,22 +10,35 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
-/*global Ext*/
+/*global Ext, NX*/
 
 /**
- * "admin" mode button.
+ * I18n helper.
  *
  * @since 3.0
  */
-Ext.define('NX.view.header.AdminMode', {
-  extend: 'NX.view.header.Mode',
-  alias: 'widget.nx-header-admin-mode',
+Ext.define('NX.I18n', {
+  singleton: true,
+  mixins: {
+    logAware: 'NX.LogAware'
+  },
 
-  mode: 'admin',
-  title: 'Administration',
-  tooltip: NX.I18n.get('GLOBAL_HEADER_ADMIN_TOOLTIP'),
-  glyph: 'xf013@FontAwesome', /* fa-gear */
+  /**
+   * @private
+   */
+  keys: {},
 
-  collapseMenu: false
+  /**
+   * @public
+   */
+  register: function(keys) {
+    Ext.apply(this.keys, keys);
+  },
 
+  /**
+   * @public
+   */
+  get: function(key) {
+    return this.keys[key];
+  }
 });

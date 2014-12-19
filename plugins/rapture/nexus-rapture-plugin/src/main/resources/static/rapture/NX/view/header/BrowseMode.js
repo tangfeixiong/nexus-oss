@@ -23,7 +23,7 @@ Ext.define('NX.view.header.BrowseMode', {
 
   mode: 'browse',
   title: 'Browse',
-  tooltip: NX.app.PluginStrings.GLOBAL_HEADER_BROWSE_TOOLTIP,
+  tooltip: NX.I18n.get('GLOBAL_HEADER_BROWSE_TOOLTIP'),
   glyph: 'xf1b2@FontAwesome' /* fa-cube */
 
 });

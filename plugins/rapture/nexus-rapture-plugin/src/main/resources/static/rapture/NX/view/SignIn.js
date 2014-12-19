@@ -21,7 +21,7 @@ Ext.define('NX.view.SignIn', {
   extend: 'Ext.window.Window',
   alias: 'widget.nx-signin',
 
-  title: NX.app.PluginStrings.GLOBAL_SIGN_IN_TITLE,
+  title: NX.I18n.get('GLOBAL_SIGN_IN_TITLE'),
 
   layout: 'fit',
   autoShow: true,
@@ -51,8 +51,8 @@ Ext.define('NX.view.SignIn', {
           {
             name: 'username',
             itemId: 'username',
-            fieldLabel: NX.app.PluginStrings.GLOBAL_SIGN_IN_USERNAME,
-            emptyText: NX.app.PluginStrings.GLOBAL_SIGN_IN_USERNAME_PLACEHOLDER,
+            fieldLabel: NX.I18n.get('GLOBAL_SIGN_IN_USERNAME'),
+            emptyText: NX.I18n.get('GLOBAL_SIGN_IN_USERNAME_PLACEHOLDER'),
             allowBlank: false,
             validateOnBlur: false // allow cancel to be clicked w/o validating this to be non-blank
           },
@@ -60,22 +60,22 @@ Ext.define('NX.view.SignIn', {
             name: 'password',
             itemId: 'password',
             inputType: 'password',
-            fieldLabel: NX.app.PluginStrings.GLOBAL_SIGN_IN_PASSWORD,
-            emptyText: NX.app.PluginStrings.GLOBAL_SIGN_IN_PASSWORD_PLACEHOLDER,
+            fieldLabel: NX.I18n.get('GLOBAL_SIGN_IN_PASSWORD'),
+            emptyText: NX.I18n.get('GLOBAL_SIGN_IN_PASSWORD_PLACEHOLDER'),
             allowBlank: false,
             validateOnBlur: false // allow cancel to be clicked w/o validating this to be non-blank
           },
           {
             xtype: 'checkbox',
-            fieldLabel: NX.app.PluginStrings.GLOBAL_SIGN_IN_REMEMBER_ME,
+            fieldLabel: NX.I18n.get('GLOBAL_SIGN_IN_REMEMBER_ME'),
             name: 'remember'
           }
         ],
 
         buttonAlign: 'left',
         buttons: [
-          { text: NX.app.PluginStrings.GLOBAL_SIGN_IN_SUBMIT, action: 'signin', formBind: true, bindToEnter: true, ui: 'primary' },
-          { text: NX.app.PluginStrings.GLOBAL_SIGN_IN_CANCEL, handler: me.close, scope: me }
+          { text: NX.I18n.get('GLOBAL_SIGN_IN_SUBMIT'), action: 'signin', formBind: true, bindToEnter: true, ui: 'primary' },
+          { text: NX.I18n.get('GLOBAL_SIGN_IN_CANCEL'), handler: me.close, scope: me }
         ]
       }
     });

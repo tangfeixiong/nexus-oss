@@ -30,7 +30,7 @@ Ext.define('NX.view.footer.Panel', {
   items: [
     {
       xtype: 'container',
-      html: NX.app.PluginStrings.GLOBAL_FOOTER_COPYRIGHT,
+      html: NX.I18n.get('GLOBAL_FOOTER_COPYRIGHT'),
       style: {
         'background-color': '#444444',
         'color': '#C6C6C6',
