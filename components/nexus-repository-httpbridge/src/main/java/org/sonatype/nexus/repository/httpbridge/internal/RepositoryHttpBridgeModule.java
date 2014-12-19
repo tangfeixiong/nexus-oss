@@ -10,26 +10,33 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
-package org.sonatype.nexus.repository.view;
+package org.sonatype.nexus.repository.httpbridge.internal;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import com.google.inject.AbstractModule;
+import com.google.inject.servlet.ServletModule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * A response that also carries a {@link Payload}.
- *
  * @since 3.0
  */
-public class PayloadResponse
-  extends Response
+public class RepositoryHttpBridgeModule
+    extends AbstractModule
 {
-  private final Payload payload;
+  private static final Logger log = LoggerFactory.getLogger(RepositoryHttpBridgeModule.class);
 
-  public PayloadResponse(final Status status, final Payload payload) {
-    super(status);
-    this.payload = checkNotNull(payload);
-  }
+  public static final String MOUNT_POINT = "/repository/*";
 
-  public Payload getPayload() {
-    return payload;
+  @Override
+  protected void configure() {
+    install(new ServletModule()
+    {
+      @Override
+      protected void configureServlets() {
+        bind(ViewServlet.class);
+        serve(MOUNT_POINT).with(ViewServlet.class);
+      }
+    });
+    log.info("Nexus repository HTTP bridge configured");
   }
 }

@@ -12,24 +12,38 @@
  */
 package org.sonatype.nexus.repository.view;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
- * A response that also carries a {@link Payload}.
+ * A representation of HTTP response status with an optional message.
  *
  * @since 3.0
  */
-public class PayloadResponse
-  extends Response
+public class Status
 {
-  private final Payload payload;
+  private boolean successful;
 
-  public PayloadResponse(final Status status, final Payload payload) {
-    super(status);
-    this.payload = checkNotNull(payload);
+  private final int code;
+
+  private final String message;
+
+  public Status(final boolean successful, final int code) {
+    this(successful, code, null);
   }
 
-  public Payload getPayload() {
-    return payload;
+  public Status(final boolean successful, final int code, final String message) {
+    this.successful = successful;
+    this.code = code;
+    this.message = message;
+  }
+
+  public boolean isSuccessful() {
+    return successful;
+  }
+
+  public int getCode() {
+    return code;
+  }
+
+  public String getMessage() {
+    return message;
   }
 }

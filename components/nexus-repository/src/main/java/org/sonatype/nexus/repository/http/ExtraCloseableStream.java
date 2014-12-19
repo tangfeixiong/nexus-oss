@@ -10,26 +10,34 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
-package org.sonatype.nexus.repository.view;
+package org.sonatype.nexus.repository.http;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.io.Closeable;
+import java.io.FilterInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
- * A response that also carries a {@link Payload}.
- *
- * @since 3.0
+ * A decorator that gives an InputStream the ability to close an additional {@link Closeable} resource when the
+ * InputStream is closed.
  */
-public class PayloadResponse
-  extends Response
+public class ExtraCloseableStream
+    extends FilterInputStream
 {
-  private final Payload payload;
+  final Closeable needsClosing;
 
-  public PayloadResponse(final Status status, final Payload payload) {
-    super(status);
-    this.payload = checkNotNull(payload);
+  public ExtraCloseableStream(final InputStream in, final Closeable needsClosing) {
+    super(in);
+    this.needsClosing = needsClosing;
   }
 
-  public Payload getPayload() {
-    return payload;
+  @Override
+  public void close() throws IOException {
+    try {
+      super.close();
+    }
+    finally {
+      needsClosing.close();
+    }
   }
 }

@@ -14,14 +14,35 @@ package org.sonatype.nexus.repository.view;
 
 import java.util.List;
 
+import com.google.common.collect.ImmutableList;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
- * ???
+ * A view route, an ordered list of handlers guarded by a {@link Matcher}.
  *
  * @since 3.0
  */
-public interface Route
+public class Route
 {
-  Matcher getMatcher();
+  private final Matcher matcher;
 
-  List<Handler> getHandlers();
+  private final List<Handler> handlers;
+
+  public Route(final Matcher matcher, final List<Handler> handlers) {
+    checkNotNull(handlers);
+    checkArgument(!handlers.isEmpty(), "handler list must not be empty");
+
+    this.matcher = checkNotNull(matcher);
+    this.handlers = ImmutableList.copyOf(checkNotNull(handlers));
+  }
+
+  public Matcher getMatcher() {
+    return matcher;
+  }
+
+  public List<Handler> getHandlers() {
+    return handlers;
+  }
 }

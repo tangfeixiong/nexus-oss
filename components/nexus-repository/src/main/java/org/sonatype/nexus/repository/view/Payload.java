@@ -12,6 +12,7 @@
  */
 package org.sonatype.nexus.repository.view;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -25,5 +26,5 @@ public interface Payload
 
   long getSize();
 
-  InputStream getInputStream();
+  InputStream openInputStream() throws IOException;
 }

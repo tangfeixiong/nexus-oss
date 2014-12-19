@@ -47,7 +47,6 @@ public class RawComponentSourceFactory
 
   private final HttpComponentResponseBuilder responseBuilder;
 
-
   @Inject
   public RawComponentSourceFactory(final HttpClientFactory httpClientFactory,
                                    final HttpClientConfigMarshaller httpClientConfigMarshaller,

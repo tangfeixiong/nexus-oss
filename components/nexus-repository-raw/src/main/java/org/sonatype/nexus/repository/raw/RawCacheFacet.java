@@ -10,26 +10,20 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
-package org.sonatype.nexus.repository.view;
+package org.sonatype.nexus.repository.raw;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import org.sonatype.nexus.repository.Facet;
+import org.sonatype.nexus.repository.view.PayloadResponse;
 
 /**
- * A response that also carries a {@link Payload}.
+ * ???
  *
  * @since 3.0
  */
-public class PayloadResponse
-  extends Response
+public interface RawCacheFacet
+    extends Facet
 {
-  private final Payload payload;
+  PayloadResponse get(Object remoteRequest);
 
-  public PayloadResponse(final Status status, final Payload payload) {
-    super(status);
-    this.payload = checkNotNull(payload);
-  }
-
-  public Payload getPayload() {
-    return payload;
-  }
+  PayloadResponse store(PayloadResponse response);
 }

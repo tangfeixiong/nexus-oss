@@ -12,24 +12,24 @@
  */
 package org.sonatype.nexus.repository.view;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
- * A response that also carries a {@link Payload}.
+ * Convenience methods for constructing various commonly used responses.
  *
  * @since 3.0
  */
-public class PayloadResponse
-  extends Response
+public class Responses
 {
-  private final Payload payload;
-
-  public PayloadResponse(final Status status, final Payload payload) {
-    super(status);
-    this.payload = checkNotNull(payload);
+  /**
+   * Indicates that the requested resource was not found.
+   */
+  public static Response notFound() {
+    return new Response(new Status(false, 404, null));
   }
 
-  public Payload getPayload() {
-    return payload;
+  /**
+   * Indicates that the HTTP method is not allowed for the requested resource.
+   */
+  public static Response methodNotAllowed(){
+    return new Response(new Status(false,405,null));
   }
 }

@@ -15,25 +15,34 @@ package org.sonatype.nexus.repository.view;
 
 import java.util.Map;
 
+import com.google.common.collect.Maps;
+
 /**
  * ???
  *
  * @since 3.0
  */
-public interface Response
+public class Response
 {
-  interface Status
-  {
-    boolean isSuccessful();
+  private final Status status;
 
-    int getCode();
+  private final Headers headers = new Headers() {}; // TODO obviously
 
-    String getMessage();
+  private final Map<String, Object> attributes = Maps.newHashMap();
+
+  public Response(final Status status) {
+    this.status = status;
   }
 
-  Status getStatus();
+  public Status getStatus() {
+    return status;
+  }
 
-  Headers getHeaders();
+  public Headers getHeaders() {
+    return headers;
+  }
 
-  Map<String, Object> getAttributes();
+  public Map<String, Object> getAttributes() {
+    return attributes;
+  }
 }

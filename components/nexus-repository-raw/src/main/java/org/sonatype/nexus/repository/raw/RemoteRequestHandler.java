@@ -10,26 +10,34 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
-package org.sonatype.nexus.repository.view;
+package org.sonatype.nexus.repository.raw;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import org.sonatype.nexus.repository.view.Context;
+import org.sonatype.nexus.repository.view.Handler;
+import org.sonatype.nexus.repository.view.Request;
+import org.sonatype.nexus.repository.view.Response;
+import org.sonatype.nexus.repository.view.Responses;
 
 /**
- * A response that also carries a {@link Payload}.
+ * This handler sets up the context to contain a request for a remote resource.
  *
  * @since 3.0
  */
-public class PayloadResponse
-  extends Response
+public class RemoteRequestHandler
+    implements Handler
 {
-  private final Payload payload;
+  @Override
+  public Response handle(final Context context) throws Exception {
 
-  public PayloadResponse(final Status status, final Payload payload) {
-    super(status);
-    this.payload = checkNotNull(payload);
-  }
+    final Request request = context.getRequest();
 
-  public Payload getPayload() {
-    return payload;
+    if(!"GET".equals(request.getAction())){
+      return  Responses.methodNotAllowed();
+    }
+
+    Object remoteRequest = new Object();
+    context.set("remoteRequest", remoteRequest);
+
+    return context.proceed();
   }
 }

@@ -10,26 +10,32 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
-package org.sonatype.nexus.repository.view;
+package org.sonatype.nexus.repository.raw;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
+
+import org.sonatype.nexus.repository.RecipeSupport;
+import org.sonatype.nexus.repository.types.ProxyType;
+import org.sonatype.nexus.repository.view.ViewFacet;
+
+import com.google.inject.Injector;
 
 /**
- * A response that also carries a {@link Payload}.
+ * A recipe for creating {@link ProxyType} repositories for the 'raw' format.
  *
  * @since 3.0
  */
-public class PayloadResponse
-  extends Response
+@Named("raw-proxy")
+@Singleton
+public class RawProxyRepositoryRecipe
+    extends RecipeSupport
 {
-  private final Payload payload;
+  @Inject
+  public RawProxyRepositoryRecipe(Injector injector) {
+    super(new ProxyType(), new RawFormat(), injector);
 
-  public PayloadResponse(final Status status, final Payload payload) {
-    super(status);
-    this.payload = checkNotNull(payload);
-  }
-
-  public Payload getPayload() {
-    return payload;
+    addFacetProvider(RawProxyViewFacet.class);
   }
 }

@@ -12,24 +12,15 @@
  */
 package org.sonatype.nexus.repository.view;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
- * A response that also carries a {@link Payload}.
+ * A handler that always returns a 404 Not Found response.
  *
  * @since 3.0
  */
-public class PayloadResponse
-  extends Response
+public class NotFoundHandler implements Handler
 {
-  private final Payload payload;
-
-  public PayloadResponse(final Status status, final Payload payload) {
-    super(status);
-    this.payload = checkNotNull(payload);
-  }
-
-  public Payload getPayload() {
-    return payload;
+  @Override
+  public Response handle(final Context context) throws Exception {
+    return Responses.notFound();
   }
 }

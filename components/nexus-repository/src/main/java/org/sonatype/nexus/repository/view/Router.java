@@ -12,12 +12,48 @@
  */
 package org.sonatype.nexus.repository.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
- * ???
+ * Dispatches {@link Request}s to the first matching {@link Route}, otherwise the request is handled by a {@link
+ * Router#setDefaultRoute(DefaultRoute)} default route}.
  *
  * @since 3.0
  */
-public interface Router
+public class Router
 {
-  Response dispatch(Request request) throws Exception;
+  private final List<Route> routes = new ArrayList<>();
+
+  private Route defaultRoute;
+
+  public Response dispatch(Request request) throws Exception {
+    Context context = new Context(request);
+
+    context.setHandlers(findRoute(context).getHandlers());
+
+    return context.proceed();
+  }
+
+  public void addRoute(Route route) {
+    routes.add(route);
+  }
+
+  /**
+   * If none of the Routes match, the {@link Request} will be {@link Router#dispatch}ed to the default route.
+   */
+  public void setDefaultRoute(final DefaultRoute defaultRoute) {
+    this.defaultRoute = checkNotNull(defaultRoute);
+  }
+
+  private Route findRoute(Context context) {
+    for (Route route : routes) {
+      if (route.getMatcher().matches(context)) {
+        return route;
+      }
+    }
+    return defaultRoute;
+  }
 }

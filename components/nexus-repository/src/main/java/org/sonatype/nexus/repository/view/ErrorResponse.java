@@ -17,7 +17,10 @@ package org.sonatype.nexus.repository.view;
  *
  * @since 3.0
  */
-public interface ErrorResponse
+public class ErrorResponse
   extends Response
 {
+  public ErrorResponse(final Status status) {
+    super(status);
+  }
 }

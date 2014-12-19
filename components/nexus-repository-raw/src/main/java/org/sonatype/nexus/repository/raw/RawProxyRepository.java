@@ -10,26 +10,23 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
-package org.sonatype.nexus.repository.view;
+package org.sonatype.nexus.repository.raw;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import org.sonatype.nexus.repository.RepositorySupport;
+import org.sonatype.nexus.repository.types.ProxyType;
 
 /**
- * A response that also carries a {@link Payload}.
+ * A raw proxy repository.
+ *
+ * TODO: Consider whether this needs to be a distinct class from other repos or not.
  *
  * @since 3.0
  */
-public class PayloadResponse
-  extends Response
+public class RawProxyRepository
+    extends RepositorySupport
 {
-  private final Payload payload;
-
-  public PayloadResponse(final Status status, final Payload payload) {
-    super(status);
-    this.payload = checkNotNull(payload);
-  }
-
-  public Payload getPayload() {
-    return payload;
+  public RawProxyRepository()
+  {
+    super(new ProxyType(), new RawFormat());
   }
 }

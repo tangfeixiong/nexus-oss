@@ -18,7 +18,7 @@ package org.sonatype.nexus.repository;
  * @since 3.0
  */
 public class MissingFacetException
-  extends RuntimeException
+    extends RuntimeException
 {
   public MissingFacetException() {
   }

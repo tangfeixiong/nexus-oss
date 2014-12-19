@@ -12,24 +12,19 @@
  */
 package org.sonatype.nexus.repository.view;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.util.List;
+
+import org.sonatype.nexus.repository.view.matchers.AlwaysMatcher;
 
 /**
- * A response that also carries a {@link Payload}.
+ * A route of last resort, guarded by an {@link AlwaysMatcher}.
  *
  * @since 3.0
  */
-public class PayloadResponse
-  extends Response
+public class DefaultRoute
+    extends Route
 {
-  private final Payload payload;
-
-  public PayloadResponse(final Status status, final Payload payload) {
-    super(status);
-    this.payload = checkNotNull(payload);
-  }
-
-  public Payload getPayload() {
-    return payload;
+  public DefaultRoute(final List<Handler> handlers) {
+    super(new AlwaysMatcher(), handlers);
   }
 }

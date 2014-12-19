@@ -10,26 +10,32 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
-package org.sonatype.nexus.repository.view;
+package org.sonatype.nexus.repository;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import org.sonatype.sisu.goodies.common.ComponentSupport;
 
 /**
- * A response that also carries a {@link Payload}.
+ * Support class for implementations of {@link Facet}.
  *
  * @since 3.0
  */
-public class PayloadResponse
-  extends Response
+public abstract class FacetSupport
+    extends ComponentSupport
+    implements Facet
 {
-  private final Payload payload;
-
-  public PayloadResponse(final Status status, final Payload payload) {
-    super(status);
-    this.payload = checkNotNull(payload);
+  @Override
+  public void init(final Repository repository) throws Exception {
   }
 
-  public Payload getPayload() {
-    return payload;
+  @Override
+  public void start() throws Exception {
+  }
+
+  @Override
+  public void stop() throws Exception {
+  }
+
+  @Override
+  public void dispose() throws Exception {
   }
 }
