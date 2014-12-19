@@ -19,7 +19,6 @@ import javax.inject.Provider;
 
 import org.sonatype.nexus.orient.DatabaseInstance;
 import org.sonatype.nexus.orient.RecordIdObfuscator;
-import org.sonatype.nexus.repository.entity.EntityIdFactory;
 import org.sonatype.sisu.goodies.lifecycle.LifecycleSupport;
 
 import com.orientechnologies.orient.core.db.document.ODatabaseDocumentTx;
@@ -40,8 +39,6 @@ public class ConfigurationStoreImpl
 
   private final RecordIdObfuscator recordIdObfuscator;
 
-  private final EntityIdFactory entityIdFactory;
-
   private final ConfigurationEntityAdapter entityAdapter;
 
   private OClass entityType;
@@ -49,12 +46,10 @@ public class ConfigurationStoreImpl
   @Inject
   public ConfigurationStoreImpl(final @Named("config") Provider<DatabaseInstance> databaseInstance,
                                 final RecordIdObfuscator recordIdObfuscator,
-                                final EntityIdFactory entityIdFactory,
                                 final ConfigurationEntityAdapter entityAdapter)
   {
     this.databaseInstance = checkNotNull(databaseInstance);
     this.recordIdObfuscator = checkNotNull(recordIdObfuscator);
-    this.entityIdFactory = checkNotNull(entityIdFactory);
     this.entityAdapter = checkNotNull(entityAdapter);
   }
 
