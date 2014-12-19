@@ -43,7 +43,7 @@ public class RawProxyViewFacet
   }
 
   @Override
-  public void init(final Repository repository) throws Exception {
+  protected void doInit(final Repository repository) throws Exception {
     final Configuration configuration = repository.getConfiguration();
 
     final Router router = getRouter();

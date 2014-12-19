@@ -15,8 +15,7 @@ package org.sonatype.nexus.repository.config;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.sonatype.nexus.repository.Repository;
-import org.sonatype.sisu.goodies.common.ComponentSupport;
+import org.sonatype.nexus.repository.FacetSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -27,7 +26,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 @Named
 public class ConfigurationFacetImpl
-  extends ComponentSupport
+  extends FacetSupport
   implements ConfigurationFacet
 {
   private final ConfigurationStore store;
@@ -35,26 +34,6 @@ public class ConfigurationFacetImpl
   @Inject
   public ConfigurationFacetImpl(final ConfigurationStore store) {
     this.store = checkNotNull(store);
-  }
-
-  @Override
-  public void init(final Repository repository) throws Exception {
-    // TODO
-  }
-
-  @Override
-  public void start() throws Exception {
-    // TODO
-  }
-
-  @Override
-  public void stop() throws Exception {
-    // TODO
-  }
-
-  @Override
-  public void dispose() throws Exception {
-    // TODO
   }
 
   @Override

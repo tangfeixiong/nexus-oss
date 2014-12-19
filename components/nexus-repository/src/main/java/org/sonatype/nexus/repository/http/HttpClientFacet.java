@@ -40,14 +40,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class HttpClientFacet
     extends FacetSupport
 {
-  public static final String CONFIG_KEY = "http_facet" ;
+  public static final String CONFIG_KEY = "http_facet";
 
-  public static final String REMOTE_URL = "remote_url" ;
+  public static final String REMOTE_URL = "remote_url";
 
   private final HttpClientBuilder httpClientBuilder;
 
   private final HttpPayloadResponseBuilder payloadResponseBuilder;
-
 
   private String remoteUrlBase;
 
@@ -62,7 +61,7 @@ public class HttpClientFacet
   }
 
   @Override
-  public void init(final Repository repository) throws Exception {
+  protected void doInit(final Repository repository) throws Exception {
     final Configuration configuration = repository.getConfiguration();
 
     final Attributes attributes = configuration.attributes(CONFIG_KEY);
