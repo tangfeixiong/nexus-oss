@@ -12,11 +12,16 @@
  */
 package org.sonatype.security.realms.ldap.internal.persist.entity;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
+
 import com.google.common.base.Strings;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+@Singleton
+@Named
 public final class Validator
 {
   /**

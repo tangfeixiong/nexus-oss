@@ -17,14 +17,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import org.sonatype.nexus.util.DigesterUtils;
 import org.sonatype.security.SecuritySystem;
 import org.sonatype.security.realms.ldap.LdapPlugin;
 import org.sonatype.security.realms.ldap.internal.events.LdapClearCacheEvent;
@@ -34,7 +32,6 @@ import org.sonatype.security.realms.ldap.internal.realms.LdapRealm;
 import org.sonatype.sisu.goodies.common.ComponentSupport;
 import org.sonatype.sisu.goodies.eventbus.EventBus;
 
-import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
@@ -54,13 +51,11 @@ public class DefaultLdapConfigurationManager
 {
   private final LdapConfigurationSource configurationSource;
 
+  private final Validator validator;
+
   private final EventBus eventBus;
 
   private final SecuritySystem securitySystem;
-
-  private final Random rand = new Random(System.currentTimeMillis());
-
-  private final Validator validator;
 
   /**
    * Configuration cache.
@@ -71,13 +66,14 @@ public class DefaultLdapConfigurationManager
 
   @Inject
   public DefaultLdapConfigurationManager(final LdapConfigurationSource configurationSource,
+                                         final Validator validator,
                                          final EventBus eventBus,
                                          final SecuritySystem securitySystem)
   {
     this.configurationSource = checkNotNull(configurationSource);
+    this.validator = checkNotNull(validator);
     this.eventBus = checkNotNull(eventBus);
     this.securitySystem = checkNotNull(securitySystem);
-    this.validator = new Validator();
     this.cache = Maps.newLinkedHashMap();
     this.cachePrimed = false;
   }
@@ -131,10 +127,6 @@ public class DefaultLdapConfigurationManager
     validator.validate(ldapServerConfiguration);
     final LinkedHashMap<String, LdapConfiguration> config = getConfiguration();
     final boolean firstEntry = config.isEmpty();
-    // TODO: I just want a "nicer" but URL safe ID, and, to get away from base-config
-    final String id = DigesterUtils.getSha1Digest(Long.toString(
-        System.identityHashCode(ldapServerConfiguration) + System.nanoTime() + rand.nextInt(2008)));
-    ldapServerConfiguration.setId(id);
     configurationSource.create(ldapServerConfiguration);
     clearCache();
     if (firstEntry) {
@@ -149,7 +141,7 @@ public class DefaultLdapConfigurationManager
   {
     checkNotNull(ldapServerConfiguration);
     validator.validate(ldapServerConfiguration);
-    checkArgument(Strings.isNullOrEmpty(ldapServerConfiguration.getId()), "'id' is null, cannot update");
+    checkArgument(ldapServerConfiguration.getId() != null, "'id' is null, cannot update");
     final LinkedHashMap<String, LdapConfiguration> config = getConfiguration();
     if (!config.containsKey(ldapServerConfiguration.getId())) {
       throw new LdapServerNotFoundException("Ldap Server: '" + ldapServerConfiguration.getId() + "' was not found.");
