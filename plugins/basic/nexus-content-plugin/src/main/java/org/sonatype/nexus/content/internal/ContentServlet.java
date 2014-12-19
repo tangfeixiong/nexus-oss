@@ -48,7 +48,6 @@ import org.sonatype.nexus.proxy.item.StorageCollectionItem;
 import org.sonatype.nexus.proxy.item.StorageFileItem;
 import org.sonatype.nexus.proxy.item.StorageItem;
 import org.sonatype.nexus.proxy.item.StorageLinkItem;
-import org.sonatype.nexus.proxy.item.uid.IsRemotelyAccessibleAttribute;
 import org.sonatype.nexus.proxy.router.RepositoryRouter;
 import org.sonatype.nexus.proxy.storage.UnsupportedStorageOperationException;
 import org.sonatype.nexus.util.SystemPropertiesHelper;
@@ -376,15 +375,6 @@ public class ContentServlet
       try {
         StorageItem item = repositoryRouter.retrieveItem(rsr);
 
-        // ensure item is remotely accessible before allowing it to be accessed
-        if (!item.isVirtual()) {
-          if (!item.getRepositoryItemUid().getBooleanAttributeValue(IsRemotelyAccessibleAttribute.class)) {
-            logger.debug("Request for remotely non-accessible UID {} is forbidden", item.getRepositoryItemUid());
-            response.sendError(SC_NOT_FOUND);
-            return;
-          }
-        }
-
         if (item instanceof StorageLinkItem) {
           final StorageLinkItem link = (StorageLinkItem) item;
           if (DEREFERENCE_LINKS) {
@@ -449,7 +439,7 @@ public class ContentServlet
       else {
         // cycle detected, current link already processed
         throw new ItemNotFoundException(ItemNotFoundException.reasonFor(link.getResourceStoreRequest(), link
-            .getRepositoryItemUid().getRepository(),
+                .getRepositoryItemUid().getRepository(),
             "Link item %s introduced a cycle while referencing it, cycle is %s", link.getRepositoryItemUid(), hops));
       }
     }
