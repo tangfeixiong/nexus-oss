@@ -60,7 +60,7 @@ public class RepositorySupport
 
   @Override
   public void init(final Configuration configuration) throws Exception {
-    this.configuration = configuration;
+    this.configuration = checkNotNull(configuration);
     this.name = configuration.getRepositoryName();
   }
 
@@ -83,6 +83,7 @@ public class RepositorySupport
 
   @Override
   public void attach(final Facet facet) throws Exception {
+    checkNotNull(facet);
     facets.put(facet.getClass(), facet);
   }
 
