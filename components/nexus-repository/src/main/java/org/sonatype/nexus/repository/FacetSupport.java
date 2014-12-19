@@ -34,6 +34,10 @@ public abstract class FacetSupport
     return started;
   }
 
+  protected void ensureStarted() {
+    checkState(started, "Not started");
+  }
+
   protected Repository getRepository() {
     checkState(repository != null, "Not initialized");
     return repository;
