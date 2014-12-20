@@ -13,27 +13,47 @@
 package org.sonatype.nexus.repository.manager;
 
 import javax.annotation.Nullable;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 import org.sonatype.nexus.repository.Repository;
 import org.sonatype.nexus.repository.config.Configuration;
-import org.sonatype.sisu.goodies.lifecycle.Lifecycle;
+import org.sonatype.sisu.goodies.lifecycle.LifecycleSupport;
 
 /**
- * ???
+ * Default {@link RepositoryManager} implementation.
  *
  * @since 3.0
  */
-public interface RepositoryManager
-  extends Lifecycle
+@Named
+@Singleton
+public class RepositoryManagerImpl
+  extends LifecycleSupport
+  implements RepositoryManager
 {
-  Iterable<Repository> browse();
+  @Override
+  public Iterable<Repository> browse() {
+    return null;
+  }
 
   @Nullable
-  Repository read(String name);
+  @Override
+  public Repository read(final String name) {
+    return null;
+  }
 
-  Repository create(Configuration configuration) throws Exception;
+  @Override
+  public Repository create(final Configuration configuration) throws Exception {
+    return null;
+  }
 
-  Repository edit(Configuration configuration) throws Exception;
+  @Override
+  public Repository edit(final Configuration configuration) throws Exception {
+    return null;
+  }
 
-  void delete(String name) throws Exception;
+  @Override
+  public void delete(final String name) throws Exception {
+
+  }
 }
