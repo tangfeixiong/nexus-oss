@@ -13,12 +13,16 @@
 package org.sonatype.nexus.repository.manager;
 
 import javax.annotation.Nullable;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.sonatype.nexus.repository.Repository;
 import org.sonatype.nexus.repository.config.Configuration;
+import org.sonatype.nexus.repository.config.ConfigurationStore;
 import org.sonatype.sisu.goodies.lifecycle.LifecycleSupport;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Default {@link RepositoryManager} implementation.
@@ -31,6 +35,13 @@ public class RepositoryManagerImpl
   extends LifecycleSupport
   implements RepositoryManager
 {
+  private final ConfigurationStore configurationStore;
+
+  @Inject
+  public RepositoryManagerImpl(final ConfigurationStore configurationStore) {
+    this.configurationStore = checkNotNull(configurationStore);
+  }
+
   @Override
   public Iterable<Repository> browse() {
     return null;
