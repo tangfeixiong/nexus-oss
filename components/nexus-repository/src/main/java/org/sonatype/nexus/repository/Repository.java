@@ -25,7 +25,7 @@ public interface Repository
 
   Format getFormat();
 
-  String getName(); // TODO: rename to key?
+  String getName();
 
   void init(Configuration configuration) throws Exception;
 
