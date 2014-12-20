@@ -78,7 +78,7 @@ public class RepositoryImpl
   public void stop() throws Exception {
     checkState(started, "Not started");
     // TODO
-    started = true;
+    started = false;
   }
 
   @Override
