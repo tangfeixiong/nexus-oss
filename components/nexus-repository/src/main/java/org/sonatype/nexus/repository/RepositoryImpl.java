@@ -19,6 +19,7 @@ import org.sonatype.nexus.repository.config.Configuration;
 import com.google.common.collect.Maps;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * {@link Repository} implementation.
@@ -35,6 +36,8 @@ public class RepositoryImpl
   private String name;
 
   private Configuration configuration;
+
+  private volatile boolean started;
 
   private final Map<Class, Facet> facets = Maps.newHashMap();
 
@@ -66,14 +69,24 @@ public class RepositoryImpl
 
   @Override
   public void start() throws Exception {
+    checkState(!started, "Already started");
+    // TODO
+    started = true;
   }
 
   @Override
   public void stop() throws Exception {
+    checkState(started, "Not started");
+    // TODO
+    started = true;
   }
 
   @Override
   public void dispose() throws Exception {
+    if (started) {
+      stop();
+    }
+    // TODO:
   }
 
   @Override
