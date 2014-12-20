@@ -10,7 +10,10 @@
  * of Sonatype, Inc. Apache Maven is a trademark of the Apache Software Foundation. M2eclipse is a trademark of the
  * Eclipse Foundation. All other trademarks are the property of their respective owners.
  */
+
 package org.sonatype.nexus.repository.manager;
+
+import java.util.Map;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -22,6 +25,8 @@ import org.sonatype.nexus.repository.config.Configuration;
 import org.sonatype.nexus.repository.config.ConfigurationStore;
 import org.sonatype.sisu.goodies.lifecycle.LifecycleSupport;
 
+import com.google.common.collect.Maps;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -32,10 +37,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 @Singleton
 public class RepositoryManagerImpl
-  extends LifecycleSupport
-  implements RepositoryManager
+    extends LifecycleSupport
+    implements RepositoryManager
 {
   private final ConfigurationStore configurationStore;
+
+  private final Map<String, Repository> repositories = Maps.newHashMap();
 
   @Inject
   public RepositoryManagerImpl(final ConfigurationStore configurationStore) {
@@ -43,28 +50,46 @@ public class RepositoryManagerImpl
   }
 
   @Override
+  protected void doStart() throws Exception {
+    // TODO:
+  }
+
+  @Override
+  protected void doStop() throws Exception {
+    // TODO:
+  }
+
+  @Override
   public Iterable<Repository> browse() {
+    // TODO:
     return null;
   }
 
   @Nullable
   @Override
   public Repository read(final String name) {
+    checkNotNull(name);
+    // TODO:
     return null;
   }
 
   @Override
   public Repository create(final Configuration configuration) throws Exception {
+    checkNotNull(configuration);
+    // TODO:
     return null;
   }
 
   @Override
   public Repository edit(final Configuration configuration) throws Exception {
+    checkNotNull(configuration);
+    // TODO:
     return null;
   }
 
   @Override
   public void delete(final String name) throws Exception {
-
+    checkNotNull(name);
+    // TODO:
   }
 }
