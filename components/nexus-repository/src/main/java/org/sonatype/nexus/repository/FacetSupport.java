@@ -28,6 +28,7 @@ public abstract class FacetSupport
 {
   private Repository repository;
 
+  // TODO: Sort out synchronization needed to ensure state sanity
   private volatile boolean started;
 
   protected boolean isStarted() {

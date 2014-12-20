@@ -37,6 +37,7 @@ public class RepositoryImpl
 
   private Configuration configuration;
 
+  // TODO: Sort out synchronization needed to ensure state sanity
   private volatile boolean started;
 
   private final Map<Class, Facet> facets = Maps.newHashMap();
