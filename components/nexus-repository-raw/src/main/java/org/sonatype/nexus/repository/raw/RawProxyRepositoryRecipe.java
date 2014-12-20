@@ -16,14 +16,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.sonatype.nexus.repository.Format;
 import org.sonatype.nexus.repository.RecipeSupport;
-import org.sonatype.nexus.repository.types.ProxyType;
-import org.sonatype.nexus.repository.view.ViewFacet;
+import org.sonatype.nexus.repository.Type;
 
 import com.google.inject.Injector;
 
 /**
- * A recipe for creating {@link ProxyType} repositories for the 'raw' format.
+ * A recipe for creating 'proxy' repositories for the 'raw' format.
  *
  * @since 3.0
  */
@@ -33,9 +33,11 @@ public class RawProxyRepositoryRecipe
     extends RecipeSupport
 {
   @Inject
-  public RawProxyRepositoryRecipe(Injector injector) {
-    super(new ProxyType(), new RawFormat(), injector);
-
+  public RawProxyRepositoryRecipe(final @Named("proxy") Type type,
+                                  final @Named("raw") Format format,
+                                  final Injector injector)
+  {
+    super(type, format, injector);
     addFacetProvider(RawProxyViewFacet.class);
   }
 }
