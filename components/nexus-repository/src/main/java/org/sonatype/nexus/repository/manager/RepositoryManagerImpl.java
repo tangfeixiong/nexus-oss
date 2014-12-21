@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.sonatype.nexus.repository.Recipe;
 import org.sonatype.nexus.repository.Repository;
 import org.sonatype.nexus.repository.config.Configuration;
 import org.sonatype.nexus.repository.config.ConfigurationStore;
@@ -40,13 +41,18 @@ public class RepositoryManagerImpl
     extends LifecycleSupport
     implements RepositoryManager
 {
-  private final ConfigurationStore configurationStore;
+  private final ConfigurationStore store;
+
+  private final Map<String,Recipe> recipes;
 
   private final Map<String, Repository> repositories = Maps.newHashMap();
 
   @Inject
-  public RepositoryManagerImpl(final ConfigurationStore configurationStore) {
-    this.configurationStore = checkNotNull(configurationStore);
+  public RepositoryManagerImpl(final ConfigurationStore store,
+                               final Map<String,Recipe> recipes)
+  {
+    this.store = checkNotNull(store);
+    this.recipes = checkNotNull(recipes);
   }
 
   @Override
