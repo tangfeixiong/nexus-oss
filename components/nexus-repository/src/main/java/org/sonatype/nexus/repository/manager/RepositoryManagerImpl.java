@@ -26,6 +26,7 @@ import org.sonatype.nexus.repository.config.Configuration;
 import org.sonatype.nexus.repository.config.ConfigurationStore;
 import org.sonatype.sisu.goodies.lifecycle.LifecycleSupport;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -53,49 +54,66 @@ public class RepositoryManagerImpl
   {
     this.store = checkNotNull(store);
     this.recipes = checkNotNull(recipes);
+
+    log.debug("Recipes:");
+    for (Map.Entry<String,Recipe> entry : recipes.entrySet()) {
+      log.debug("Recipe '{}': {}", entry.getKey(), entry.getValue());
+    }
   }
 
   @Override
   protected void doStart() throws Exception {
-    // TODO:
+    // TODO: load all repository configs
+    // TODO: re-create repository from recipe
+    // TODO: start all repositories
+    // TODO: fire restored event ... maybe rename to started
   }
 
   @Override
   protected void doStop() throws Exception {
-    // TODO:
+    // TODO: stop all repositories
+    // TODO: fire stopped event?
+    repositories.clear();
   }
 
   @Override
   public Iterable<Repository> browse() {
-    // TODO:
-    return null;
+    return ImmutableList.copyOf(repositories.values());
   }
 
   @Nullable
   @Override
   public Repository read(final String name) {
     checkNotNull(name);
-    // TODO:
-    return null;
+    return repositories.get(name);
   }
 
   @Override
   public Repository create(final Configuration configuration) throws Exception {
     checkNotNull(configuration);
-    // TODO:
+    // TODO: create repository from recipe
+    // TODO: store configuration
+    // TODO: add to repositories collection
+    // TODO: fire created event
     return null;
   }
 
   @Override
   public Repository edit(final Configuration configuration) throws Exception {
     checkNotNull(configuration);
-    // TODO:
+    // TODO: stop repository
+    // TODO: reconfigure repository
+    // TODO: start repository
+    // TODO: fire updated event?
     return null;
   }
 
   @Override
   public void delete(final String name) throws Exception {
     checkNotNull(name);
-    // TODO:
+    // TODO: stop repository
+    // TODO: remove from store
+    // TODO: remove from collection
+    // TODO: fire deleted event
   }
 }
